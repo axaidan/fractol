@@ -2,7 +2,12 @@ NAME		=	fractol
 
 CC			=	gcc
 
-SRCS		=	main.c
+SRCS		=	main.c \
+				initializations.c \
+				system.c \
+				errors.c \
+				fractol.c \
+				utils_mlx.c
 
 SRCS_DIR	=	srcs
 
