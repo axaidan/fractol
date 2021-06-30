@@ -21,7 +21,7 @@ INCLUDE_DIR	=	includes
 
 HEADERS		=	-I ${INCLUDE_DIR} -I ${LIBFT_DIR} -I ${MLX_DIR} 
 
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -O3 -flto
 
 LIB_LINK	=	-L ${LIBFT_DIR} -L ${MLX_DIR}
 

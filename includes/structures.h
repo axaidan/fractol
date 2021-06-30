@@ -9,8 +9,8 @@ typedef struct	s_pt
 
 typedef struct	s_pos
 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 }				t_pos;
 
 typedef struct	s_img
@@ -27,8 +27,9 @@ typedef struct	s_mlx
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	img;
-	float	scale;
+	double	scale;
 	t_pos	pos;
+	int		max_ite;
 }				t_mlx;
 
 #endif

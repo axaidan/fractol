@@ -10,47 +10,49 @@ int	key_pressed(int key, t_mlx *mlx)
 int	mouse_used(int button, int x, int y, t_mlx *mlx)
 {
 	static int		zoom_lvl = 0;;
-	static float	bnd_x = BND_X;
-	static float	bnd_y = BND_Y;
+	static double	bnd_x = BND_X;
+	static double	bnd_y = BND_Y;
 
 	mlx->pos.x += (x - RES_X / 2) * mlx->scale;
 	mlx->pos.y += (y - RES_Y / 2) * mlx->scale;
 	if (button == UP_SCR)
 	{
 		zoom_lvl++;
-		mlx->scale /= 2.0;
+		mlx->max_ite += 8;
+		mlx->scale /= 1.5;
 	}
 	else if (button == DN_SCR)
 	{
 		zoom_lvl--;
-		mlx->scale *= 2.0;
+		mlx->max_ite -= 8;
+		mlx->scale *= 1.5;
 	}
 	printf("zoom_lvl\t= %d\n", zoom_lvl);
+	printf("max\t\t= %d\n", mlx->max_ite);
+	printf("scale\t\t= %.16f\n", mlx->scale);
 	draw_fractal(mlx, bnd_x, bnd_y);
 	return (SUCCESS);
 }
 
-float	scale_coord(float var, float inf_bnd, float res)
+double	scale_coord(double var, double inf_bnd, double res)
 {
-	float	interval;
+	double	interval;
 
 	interval = 1.0 - (inf_bnd);
 	return (((var * interval) / res) + inf_bnd);
 }
 
-int	mandelbrot(t_pos scaled)
+int	mandelbrot(t_pos scaled, int max)
 {
 	t_pos	c1;
 	t_pos	c2;
 	int		ite;
-	int		max;
 
 	c2.x = 0.0;
 	c2.y = 0.0;
 	c1.x = 0.0;
 	c1.y = 0.0;
 	ite = 0;
-	max = 500;
 	while (ite < max && (c2.x + c2.y) <= 4)
 	{
 		c1.y = (c1.x + c1.x) * c1.y + scaled.y;
@@ -65,7 +67,7 @@ int	mandelbrot(t_pos scaled)
 		return (ite * ite * ite);
 }
 
-void	draw_fractal(t_mlx *mlx, float bnd_x, float bnd_y)
+void	draw_fractal(t_mlx *mlx, double bnd_x, double bnd_y)
 {
 	(void)bnd_y;
 	(void)bnd_x;
@@ -76,12 +78,12 @@ void	draw_fractal(t_mlx *mlx, float bnd_x, float bnd_y)
 	pix.y = 0;
 	while (pix.y < RES_Y)
 	{
-		scaled.y = (pix.y - (float)RES_Y / 2.0) * mlx->scale + mlx->pos.y;
+		scaled.y = (pix.y - (double)RES_Y / 2.0) * mlx->scale + mlx->pos.y;
 		pix.x = 0;
 		while (pix.x < RES_X)
 		{
-			scaled.x = (pix.x - (float)RES_X / 2.0) * mlx->scale + mlx ->pos.x;
-			color = mandelbrot(scaled);
+			scaled.x = (pix.x - (double)RES_X / 2.0) * mlx->scale + mlx ->pos.x;
+			color = mandelbrot(scaled, mlx->max_ite);
 			my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
 			pix.x++;
 		}
