@@ -8,8 +8,8 @@
 # define FAILURE 1
 
 /*	SCREEN RESOLUTION */
-# define RES_Y 720
-# define RES_X 1280
+# define RES_Y 360
+# define RES_X 640 
 
 /*	KEYCODES */
 # define ESC 65307

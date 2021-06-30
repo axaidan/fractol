@@ -9,4 +9,7 @@ void	init_mlx_struct(t_mlx *mlx)
 	mlx->img.bpp = -1;
 	mlx->img.l_len = -1;
 	mlx->img.endian = -1;
+	mlx->scale = 1.0 / 256;
+	mlx->pos.x = 0.0;
+	mlx->pos.y = 0.0;
 }
