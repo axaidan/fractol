@@ -9,6 +9,7 @@ int	key_pressed(int key, t_mlx *mlx)
 
 int	mouse_used(int button, int x, int y, t_mlx *mlx)
 {
+	static int		zoom_lvl = 0;;
 	static float	bnd_x = BND_X;
 	static float	bnd_y = BND_Y;
 
@@ -16,14 +17,15 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 	mlx->pos.y += (y - RES_Y / 2) * mlx->scale;
 	if (button == UP_SCR)
 	{
-		printf("zooming\n");
+		zoom_lvl++;
 		mlx->scale /= 2.0;
 	}
 	else if (button == DN_SCR)
 	{
-		printf("un-zooming\n");
+		zoom_lvl--;
 		mlx->scale *= 2.0;
 	}
+	printf("zoom_lvl\t= %d\n", zoom_lvl);
 	draw_fractal(mlx, bnd_x, bnd_y);
 	return (SUCCESS);
 }
@@ -48,7 +50,7 @@ int	mandelbrot(t_pos scaled)
 	c1.x = 0.0;
 	c1.y = 0.0;
 	ite = 0;
-	max = 1000;
+	max = 500;
 	while (ite < max && (c2.x + c2.y) <= 4)
 	{
 		c1.y = (c1.x + c1.x) * c1.y + scaled.y;
@@ -60,7 +62,7 @@ int	mandelbrot(t_pos scaled)
 	if (ite == max) 
 		return (WHITE);
 	else
-		return (ite * ite);
+		return (ite * ite * ite);
 }
 
 void	draw_fractal(t_mlx *mlx, float bnd_x, float bnd_y)
@@ -74,24 +76,18 @@ void	draw_fractal(t_mlx *mlx, float bnd_x, float bnd_y)
 	pix.y = 0;
 	while (pix.y < RES_Y)
 	{
-//		scaled.y = scale_coord((float)(pix.y), bnd_y, (float)RES_Y);
 		scaled.y = (pix.y - (float)RES_Y / 2.0) * mlx->scale + mlx->pos.y;
-//		scaled.y = scale_coord((float)(pix.y), bnd_y, (float)RES_Y);
-//		scaled.y *= mlx->scale;
 		pix.x = 0;
 		while (pix.x < RES_X)
 		{
-//			scaled.x = scale_coord((float)(pix.x), bnd_x, (float)RES_X);
 			scaled.x = (pix.x - (float)RES_X / 2.0) * mlx->scale + mlx ->pos.x;
-//			scaled.x = scale_coord((float)(pix.x), bnd_x, (float)RES_X);
-//			scaled.x *= mlx->scale;
 			color = mandelbrot(scaled);
 			my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
 			pix.x++;
 		}
 		pix.y++;
 	}
-	printf("done\n");
+	printf("done\n\n");
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,
 		0, 0);
 }
