@@ -27,8 +27,7 @@ typedef struct	s_mlx
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	img;
+	float	scale;
 }				t_mlx;
-
-
 
 #endif
