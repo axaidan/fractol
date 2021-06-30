@@ -31,7 +31,7 @@ int		print_ret_err(int error);
 
 /*	fractol.c */
 int		fractol(t_mlx *mlx);
-void	draw_fractal(t_mlx *mlx, double bnd_x, double bnd_y);
+void	draw_fractal(t_mlx *mlx, long double bnd_x, long double bnd_y);
 
 /*	utils_mlx.c */
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
