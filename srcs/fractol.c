@@ -33,6 +33,8 @@ int	mandelbrot(t_pos scaled, int max)
 		return (WHITE);
 	else
 		return (ite * ite * ite);
+//		return (ite * ite);
+//		return (ite);
 //		return ((ite % 255 << 16) + (ite % 255 << 8) + (ite % 255));
 }
 
