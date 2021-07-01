@@ -13,6 +13,8 @@
 
 /*	KEYCODES */
 # define ESC 65307
+# define PLUS 65451
+# define MINUS 65453
 
 /*	MOUSE CODES */
 # define UP_SCR 4
@@ -28,5 +30,8 @@
 /*	COLORS */
 # define BLACK 0x0
 # define WHITE 0xFFFFFF
+# define RED 0xFF0000
+# define GREEN 0xFF00
+# define BLUE 0xFF
 
 #endif

@@ -6,7 +6,6 @@ int main(void)
 	int		error;
 
 	error = 0;
-	printf("sizeof(double)\t= %ld\n", sizeof(double));
 	init_mlx_struct(&mlx);
 	error = start_mlx(&mlx);
 	if (error)

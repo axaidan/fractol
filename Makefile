@@ -7,7 +7,9 @@ SRCS		=	main.c \
 				system.c \
 				errors.c \
 				fractol.c \
-				utils_mlx.c
+				utils_mlx.c \
+				hooks.c \
+				display.c
 
 SRCS_DIR	=	srcs
 

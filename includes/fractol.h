@@ -21,6 +21,7 @@
 
 /*	initializations.c */
 void	init_mlx_struct(t_mlx *mlx);
+void	init_variables(t_mlx *mlx);
 
 /*	system.c */
 int		start_mlx(t_mlx *mlx);
@@ -31,9 +32,16 @@ int		print_ret_err(int error);
 
 /*	fractol.c */
 int		fractol(t_mlx *mlx);
-void	draw_fractal(t_mlx *mlx, long double bnd_x, long double bnd_y);
+void	draw_fractal(t_mlx *mlx);
 
 /*	utils_mlx.c */
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+
+/*	hooks.c */
+int		mouse_used(int button, int x, int y, t_mlx *mlx);
+int		key_pressed(int key, t_mlx *mlx);
+
+/*	display.c */
+void	display_info(t_mlx *mlx);
 
 #endif
