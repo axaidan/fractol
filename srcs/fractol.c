@@ -45,19 +45,21 @@ void	draw_fractal(t_mlx *mlx)
 	int		color;
 
 	pix.y = 0;
+	ft_putstr_fd("Processing........", STDOUT_FILENO);
 	while (pix.y < RES_Y)
 	{
 		scaled.y = (pix.y - (long double)RES_Y / 2.0) * mlx->scale + mlx->pos.y;
 		pix.x = 0;
 		while (pix.x < RES_X)
 		{
-			scaled.x = (pix.x - (long double)RES_X / 2.0) * mlx->scale + mlx ->pos.x;
+			scaled.x = (pix.x - (long double)RES_X / 2.0) * mlx->scale + mlx->pos.x;
 			color = mandelbrot(scaled, mlx->max_ite);
 			my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
 			pix.x++;
 		}
 		pix.y++;
 	}
+	ft_putstr_fd(" DONE !\n", STDOUT_FILENO);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,
 			0, 0);
 }

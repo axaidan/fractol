@@ -34,12 +34,14 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 	{
 		//zoom_lvl++;
 		mlx->scale /= 1.5;
+		mlx->max_ite += 16;
 		//agrandissement *= 1.5;
 	}
 	else if (button == DN_SCR)
 	{
 		//zoom_lvl--;
 		mlx->scale *= 1.5;
+		mlx->max_ite -= 16;
 		//agrandissement /= 1.5;
 	}
 	draw_fractal(mlx);
