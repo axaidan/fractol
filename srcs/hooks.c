@@ -47,3 +47,30 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 	draw_fractal(mlx);
 	return (SUCCESS);
 }
+
+int	shift_colors(t_mlx *mlx)
+{
+	t_pt	pix;
+	/*
+	int		i;
+
+	i = 0;
+	while (i < 1000000)
+		i++;
+	*/
+	usleep(50000);
+	pix.y = 0;
+	while(pix.y < RES_Y)
+	{
+		pix.x = 0;
+		while (pix.x < RES_X)
+		{
+			change_pixel(&mlx->img, pix.x, pix.y);
+			pix.x++;
+		}
+		pix.y++;
+	}
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,
+			0, 0);
+	return (SUCCESS);
+}

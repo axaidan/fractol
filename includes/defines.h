@@ -6,6 +6,8 @@
 # define FALSE 0
 # define SUCCESS 0
 # define FAILURE 1
+# define INCREASING 1
+# define DECREASING -1
 
 /*	SCREEN RESOLUTION */
 # define RES_Y 720
