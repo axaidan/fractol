@@ -12,9 +12,13 @@ long double	scale_coord(long double var, long double inf_bnd, long double res)
 
 int	mandelbrot(t_pos scaled, int max)
 {
+	unsigned int	r;
+	unsigned int	g;
+	unsigned int	b;
 	t_pos	c1;
 	t_pos	c2;
 	int		ite;
+	long double continuous_index;
 
 	c2.x = 0.0;
 	c2.y = 0.0;
@@ -30,12 +34,21 @@ int	mandelbrot(t_pos scaled, int max)
 		ite++;
 	}
 	if (ite == max) 
-		return (WHITE);
+		return (BLACK);
 	else
-		return (ite * ite * ite);
+	{
+		continuous_index = (long double)ite + 1.0 - ((logl(2) / fabsl(c2.x + c2.y)) / logl(2));
+		r = (unsigned char)(sin(0.016 * continuous_index + 4) * 127.5 + 127.5);
+		g = ((unsigned char)(sin(0.011 * continuous_index + 4) * 127.5 + 127.5));
+		b = ((unsigned char)(sin(0.062 * continuous_index + 4) * 127.5 + 127.5));
+		ite = (r << 16);
+		ite += (g << 8);
+		ite += b;
+//		return (ite * ite * ite);
 //		return (ite * ite);
-//		return (ite);
+		return (ite);
 //		return ((ite % 255 << 16) + (ite % 255 << 8) + (ite % 255));
+	}
 }
 
 void	draw_fractal(t_mlx *mlx)

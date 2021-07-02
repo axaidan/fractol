@@ -10,7 +10,7 @@ int	key_pressed(int key, t_mlx *mlx)
 		if (key == PLUS)
 			mlx->max_ite += 16;
 		if (key == MINUS)
-			mlx->max_ite += 16;
+			mlx->max_ite -= 16;
 		draw_fractal(mlx);
 	}
 	else if (key == 'r')
