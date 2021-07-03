@@ -2,20 +2,23 @@
 
 void	change_pixel(t_img *img, int x, int y)
 {
-	char	*dst;
+	char			*dst;
+	/*
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
-	int		color;
+	*/
+	t_rgb			rgb;
+	int				color;
 
 	dst = img->addr + (y * img->l_len + x * (img->bpp / 8));
 	color = *(unsigned int *)dst;
 	if (color == BLACK)
 		return ;
-	r = (color >> 16) - 1;
-	g = (color >> 8) - 1;
-	b = color - 1;
-	color = (r << 16) + (g << 8) + b;
+	rgb.r = (color >> 16) - 1;
+	rgb.g = (color >> 8) - 1;
+	rgb.b = color - 1;
+	color = (rgb.r << 16) + (rgb.g << 8) + rgb.b;
 	*(unsigned int*)dst = color;
 }
 

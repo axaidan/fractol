@@ -6,6 +6,7 @@ void	init_variables(t_mlx *mlx)
 	mlx->pos.x = 0.0;
 	mlx->pos.y = 0.0;
 	mlx->max_ite = 256;
+	mlx->shift = FALSE;
 }
 
 void	init_mlx_struct(t_mlx *mlx)

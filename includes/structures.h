@@ -13,6 +13,19 @@ typedef struct	s_pos
 	long double	y;
 }				t_pos;
 
+typedef struct	s_cpx
+{
+	long double	real;
+	long double	imag;
+}				t_cpx;
+
+typedef struct	s_rgb
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+}				t_rgb;
+
 typedef struct	s_img
 {
 	void	*img_ptr;
@@ -30,6 +43,7 @@ typedef struct	s_mlx
 	long double	scale;
 	t_pos	pos;
 	int		max_ite;
+	int		shift;
 }				t_mlx;
 
 #endif

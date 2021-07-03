@@ -2,7 +2,6 @@
 
 int	key_pressed(int key, t_mlx *mlx)
 {
-//	printf("%d\n", key);
 	if (key == ESC)
 		close_mlx(mlx, FALSE);
 	else if (key == PLUS || key == MINUS)
@@ -18,6 +17,10 @@ int	key_pressed(int key, t_mlx *mlx)
 		init_variables(mlx);
 		draw_fractal(mlx);
 	}
+	else if (key == 's' && mlx->shift == FALSE)
+		mlx->shift = TRUE;
+	else if (key == 's' && mlx->shift == TRUE)
+		mlx->shift = FALSE;
 	else if (key == 'i')
 		display_info(mlx);
 	return (SUCCESS);
@@ -25,8 +28,8 @@ int	key_pressed(int key, t_mlx *mlx)
 
 int	mouse_used(int button, int x, int y, t_mlx *mlx)
 {
-//	static int          zoom_lvl = 0;;
-//	static long double  agrandissement = 1.0;
+	//	static int          zoom_lvl = 0;;
+	//	static long double  agrandissement = 1.0;
 
 	mlx->pos.x += (x - RES_X / 2) * mlx->scale;
 	mlx->pos.y += (y - RES_Y / 2) * mlx->scale;
@@ -51,26 +54,22 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 int	shift_colors(t_mlx *mlx)
 {
 	t_pt	pix;
-	/*
-	int		i;
 
-	i = 0;
-	while (i < 1000000)
-		i++;
-	*/
-	usleep(50000);
-	pix.y = 0;
-	while(pix.y < RES_Y)
+	if (mlx->shift == TRUE)
 	{
-		pix.x = 0;
-		while (pix.x < RES_X)
+		pix.y = 0;
+		while(pix.y < RES_Y)
 		{
-			change_pixel(&mlx->img, pix.x, pix.y);
-			pix.x++;
+			pix.x = 0;
+			while (pix.x < RES_X)
+			{
+				change_pixel(&mlx->img, pix.x, pix.y);
+				pix.x++;
+			}
+			pix.y++;
 		}
-		pix.y++;
+		mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,
+				0, 0);
 	}
-	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,
-			0, 0);
 	return (SUCCESS);
 }
