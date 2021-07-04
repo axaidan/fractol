@@ -53,8 +53,11 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 
 int	shift_colors(t_mlx *mlx)
 {
-	t_pt	pix;
+	t_pt			pix;
+	static float	shift = 0.0;
+	float			sinusoid;
 
+	sinusoid = sin(shift);
 	if (mlx->shift == TRUE)
 	{
 		pix.y = 0;
@@ -63,7 +66,7 @@ int	shift_colors(t_mlx *mlx)
 			pix.x = 0;
 			while (pix.x < RES_X)
 			{
-				change_pixel(&mlx->img, pix.x, pix.y);
+				change_pixel(&mlx->img, pix.x, pix.y, sinusoid);
 				pix.x++;
 			}
 			pix.y++;
@@ -71,5 +74,6 @@ int	shift_colors(t_mlx *mlx)
 		mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,
 				0, 0);
 	}
+	shift += 0.01;
 	return (SUCCESS);
 }

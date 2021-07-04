@@ -1,5 +1,6 @@
 #include "fractol.h"
 
+/*
 long double	scale_coord(long double var, long double inf_bnd, long double res)
 {
 	long double	interval;
@@ -7,21 +8,29 @@ long double	scale_coord(long double var, long double inf_bnd, long double res)
 	interval = 1.0 - (inf_bnd);
 	return (((var * interval) / res) + inf_bnd);
 }
+*/
 
 int	continuous_pixel_scaling(int ite, t_cpx c2)
 {
 	t_rgb		rgb;
 	long double continuous_index;
 
-	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.real + c2.real)) / logl(2));
-	/*
+//	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.real)) / logl(2));
+//	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.imag)) / logl(2));
+//	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.real + c2.real)) / logl(2));
+	/* if / else ONLY FOR julia() */
+	if (c2.real + c2.imag > -0.1 && c2.real + c2.imag < 0.1)
+	continuous_index = ite + 1.0 - logl(2) / logl(2);
+	else
+	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.real)) / logl(2));
 	rgb.r = (unsigned char)(sin(0.016 * continuous_index + 3) * 127.5 + 127.5);
 	rgb.g = ((unsigned char)(sin(0.011 * continuous_index + 2) * 127.5 + 127.5));
 	rgb.b = ((unsigned char)(sin(0.062 * continuous_index + 1) * 127.5 + 127.5));
+	/*
+	rgb.r = (unsigned char)(sin(0.050 * continuous_index + 3) * 75 + 180);
+	rgb.g = ((unsigned char)(sin(0.089 * continuous_index + 2) * 75 + 180));
+	rgb.b = ((unsigned char)(sin(0.075 * continuous_index + 4) * 75 + 180));
 	*/
-	rgb.r = (unsigned char)(sin(0.009 * continuous_index + 1) * 100 + 155);
-	rgb.g = ((unsigned char)(sin(0.008 * continuous_index + 4) * 100 + 155));
-	rgb.b = ((unsigned char)(sin(0.003 * continuous_index + 2) * 100 + 155));
 	ite = (rgb.r << 16);
 	ite += (rgb.g << 8);
 	ite += rgb.b;
@@ -30,36 +39,41 @@ int	continuous_pixel_scaling(int ite, t_cpx c2)
 
 int	mandelbrot(t_cpx scaled, int max)
 {
-	t_pos	c1;
-	t_pos	c2;
+	t_cpx	c1;
+	t_cpx	c2;
 	int		ite;
 
-	c2.x = 0.0;
-	c2.y = 0.0;
-	c1.x = 0.0;
-	c1.y = 0.0;
+	c2.real = 0.0;
+	c2.imag = 0.0;
+	c1.real = 0.0;
+	c1.imag = 0.0;
 	ite = 0;
-	while (ite < max && (c2.x + c2.y) <= 4)
+	while (ite < max && (c2.real + c2.imag) <= 4)
 	{
-		c1.y = (c1.x + c1.x) * c1.y + scaled.imag;
-		c1.x = c2.x - c2.y + scaled.real;
-		c2.x = c1.x * c1.x;
-		c2.y = c1.y * c1.y;
+		c1.imag = (c1.real + c1.real) * c1.imag + scaled.imag;
+		c1.real = c2.real - c2.imag + scaled.real;
+		c2.real = c1.real * c1.real;
+		c2.imag = c1.imag * c1.imag;
 		ite++;
 	}
 	if (ite == max) 
 		return (BLACK);
 	else
-		//return (continuous_pixel_scaling(ite, c2));
-		return (12);
+		return (continuous_pixel_scaling(ite, c2));
 	//		return (ite * ite);
 	//		return (ite * ite * ite);
 	//		return ((ite % 255 << 16) + (ite % 255 << 8) + (ite % 255));
 }
-
+/*
 #define cRe -0.7 
-#define cIm 0.2727015
-
+#define cIm 0.27015
+*/
+/*
+#define cRe -0.038088
+#define cIm 0.9754633
+*/
+#define cRe 0.285
+#define cIm 0.013
 int	basic_mandelbrot(t_cpx c0, int max)
 {
 	t_cpx		c;
@@ -67,9 +81,7 @@ int	basic_mandelbrot(t_cpx c0, int max)
 	int			i;
 
 	i = 0;
-	c.real = 0.0;
-	c.imag = 0.0;
-	while (c.real * c.real + c.imag * c.imag <= 2 * 2 && i < max)
+	while (c0.real * c0.real + c0.imag * c0.imag <= 2 * 2 && i < max)
 	{
 		c.real = c0.real;		// X
 		c.imag = c0.imag;		// Y
@@ -104,8 +116,8 @@ void	draw_fractal(t_mlx *mlx)
 		while (pix.x < RES_X)
 		{
 			scaled.real = (pix.x - (long double)RES_X / 2.0) * mlx->scale + mlx->pos.x;
-//			color = mandelbrot(scaled, mlx->max_ite);
-			color = basic_mandelbrot(scaled, mlx->max_ite);
+		color = mandelbrot(scaled, mlx->max_ite);
+//			color = basic_mandelbrot(scaled, mlx->max_ite);
 			my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
 			pix.x++;
 		}
@@ -116,54 +128,11 @@ void	draw_fractal(t_mlx *mlx)
 			0, 0);
 }
 
-/*
-   int	button_press(int button, int x, int y, t_mlx *mlx)
-   {
-   if (button == UP_SCR)
-   printf("Up scroll pressed\n");
-   else if (button == DN_SCR)
-   printf("Down scroll pressed\n");
-   mlx->pos.x += (x - RES_X / 2) * mlx->scale;
-   mlx->pos.y += (y - RES_Y / 2) * mlx->scale;
-   if (button == UP_SCR)
-   {
-//zoom_lvl++;
-mlx->scale /= 1.5;
-mlx->max_ite += 16;
-//agrandissement *= 1.5;
-}
-else if (button == DN_SCR)
-{
-//zoom_lvl--;
-mlx->scale *= 1.5;
-mlx->max_ite -= 16;
-//agrandissement /= 1.5;
-}
-draw_fractal(mlx);
-return (SUCCESS);
-}
-
-int	button_release(int button, int x, int y, t_mlx *mlx)
-{
-(void)x;
-(void)y;
-(void)mlx;
-if (button == UP_SCR)
-printf("Up scroll released\n");
-else if (button == DN_SCR)
-printf("Down scroll released\n");
-return (SUCCESS);
-}
-*/
-
-
 int	fractol(t_mlx *mlx)
 {
 	draw_fractal(mlx);
 	mlx_key_hook(mlx->win_ptr, key_pressed, mlx);
 	mlx_mouse_hook(mlx->win_ptr, mouse_used, mlx);
-	//	mlx_hook(mlx->win_ptr, ButtonPress, ButtonPressMask, button_press, mlx);
-	//	mlx_hook(mlx->win_ptr, ButtonRelease, ButtonReleaseMask, button_release, mlx);
 	mlx_loop_hook(mlx->mlx_ptr, shift_colors, mlx);
 	mlx_loop(mlx->mlx_ptr);
 	return (SUCCESS);
