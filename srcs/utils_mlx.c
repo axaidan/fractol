@@ -3,11 +3,6 @@
 void	change_pixel(t_img *img, int x, int y)
 {
 	char			*dst;
-	/*
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-	*/
 	t_rgb			rgb;
 	int				color;
 
