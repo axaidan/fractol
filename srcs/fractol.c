@@ -74,8 +74,8 @@ int	julia(t_cpx c0, int max, t_cpx params)
 	i = 0;
 	while (c0.real * c0.real + c0.imag * c0.imag <= 2 * 2 && i < max)
 	{
-		c.real = c0.real;		// X
-		c.imag = c0.imag;		// Y
+		c.real = c0.real;
+		c.imag = c0.imag;
 		//		real_temp = c.real * c.real - c.imag * c.imag + c0.real;
 		//		c.imag = 2.0 * c.real * c.imag + c0.imag;
 		c0.real = c.real * c.real - c.imag * c.imag + params.real;
@@ -98,13 +98,10 @@ void	draw_fractal(t_mlx *mlx)
 
 	pix.y = 0;
 
-	ft_putstr_fd("Processing........", STDOUT_FILENO);
 	while (pix.y < RES_Y)
 	{
 		scaled.imag = (pix.y - (long double)RES_Y / 2.0) * mlx->scale + mlx->pos.y;
 		pix.x = 0;
-		if (pix.y == RES_Y / 2)
-			ft_putstr_fd("Please wait.........", STDOUT_FILENO);
 		while (pix.x < RES_X)
 		{
 			scaled.real = (pix.x - (long double)RES_X / 2.0) * mlx->scale + mlx->pos.x;
@@ -113,11 +110,11 @@ void	draw_fractal(t_mlx *mlx)
 			else
 				color = julia(scaled, mlx->max_ite, mlx->j_params);
 			my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
+			display_render_progress(pix);
 			pix.x++;
 		}
 		pix.y++;
 	}
-	ft_putstr_fd("\a DONE !\n", STDOUT_FILENO);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,
 			0, 0);
 }

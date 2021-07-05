@@ -47,5 +47,6 @@ int		shift_colors(t_mlx *mlx);
 
 /*	display.c */
 void	display_info(t_mlx *mlx);
+void	display_render_progress(t_pt pix);
 
 #endif
