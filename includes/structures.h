@@ -35,6 +35,14 @@ typedef struct	s_img
 	int		endian;
 }				t_img;
 
+typedef struct	s_args
+{
+	int		argc;
+	char	**argv;
+	int		set;
+	t_cpx	j_params;
+}				t_args;
+
 typedef struct	s_mlx
 {
 	void	*mlx_ptr;

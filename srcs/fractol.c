@@ -19,7 +19,7 @@ int	continuous_pixel_scaling(int ite, t_cpx c2)
 //	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.imag)) / logl(2));
 //	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.real + c2.real)) / logl(2));
 	/* if / else ONLY FOR julia() */
-	if (c2.real + c2.imag > -0.1 && c2.real + c2.imag < 0.1)
+	if (c2.real + c2.imag > -0.18 && c2.real + c2.imag < 0.18)
 	continuous_index = ite + 1.0 - logl(2) / logl(2);
 	else
 	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.real)) / logl(2));
@@ -59,22 +59,14 @@ int	mandelbrot(t_cpx scaled, int max)
 	if (ite == max) 
 		return (BLACK);
 	else
-		return (continuous_pixel_scaling(ite, c2));
+	//	return (continuous_pixel_scaling(ite, c2));
+	//		return (ite);
 	//		return (ite * ite);
-	//		return (ite * ite * ite);
+			return (ite * ite * ite);
 	//		return ((ite % 255 << 16) + (ite % 255 << 8) + (ite % 255));
 }
-/*
-#define cRe -0.7 
-#define cIm 0.27015
-*/
-/*
-#define cRe -0.038088
-#define cIm 0.9754633
-*/
-#define cRe 0.285
-#define cIm 0.013
-int	basic_mandelbrot(t_cpx c0, int max)
+
+int	julia(t_cpx c0, int max)
 {
 	t_cpx		c;
 //	long double	real_temp;
@@ -106,6 +98,7 @@ void	draw_fractal(t_mlx *mlx)
 	int		color;
 
 	pix.y = 0;
+
 	ft_putstr_fd("Processing........", STDOUT_FILENO);
 	while (pix.y < RES_Y)
 	{
@@ -116,8 +109,8 @@ void	draw_fractal(t_mlx *mlx)
 		while (pix.x < RES_X)
 		{
 			scaled.real = (pix.x - (long double)RES_X / 2.0) * mlx->scale + mlx->pos.x;
-		color = mandelbrot(scaled, mlx->max_ite);
-//			color = basic_mandelbrot(scaled, mlx->max_ite);
+//			color = mandelbrot(scaled, mlx->max_ite);
+			color = julia(scaled, mlx->max_ite);
 			my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
 			pix.x++;
 		}

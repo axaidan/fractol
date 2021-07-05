@@ -1,28 +1,6 @@
 #include "fractol.h"
 
 /*
-Color TransformH(
-    const Color &in,  // color to transform
-    float H
-)
-{
-  float U = cos(H*M_PI/180);
-  float W = sin(H*M_PI/180);
-
-  Color ret;
-  ret.r = (.299+.701*U+.168*W)*in.r
-    + (.587-.587*U+.330*W)*in.g
-    + (.114-.114*U-.497*W)*in.b;
-  ret.g = (.299-.299*U-.328*W)*in.r
-    + (.587+.413*U+.035*W)*in.g
-    + (.114-.114*U+.292*W)*in.b;
-  ret.b = (.299-.3*U+1.25*W)*in.r
-    + (.587-.588*U-1.05*W)*in.g
-    + (.114+.886*U-.203*W)*in.b;
-  return ret;
-}
-*/
-
 t_rgb	shift_hue(t_rgb in, float shift)
 {
   float U = cos(shift*M_PI/180);
@@ -40,6 +18,7 @@ t_rgb	shift_hue(t_rgb in, float shift)
     + (.114+.886*U-.203*W)*in.b;
   return ret;
 }
+*/
 
 void	change_pixel(t_img *img, int x, int y, float shift)
 {
@@ -56,12 +35,6 @@ void	change_pixel(t_img *img, int x, int y, float shift)
 	rgb.g = (color >> 8) - 1;
 	rgb.b = color - 1;
 	color = (rgb.r << 16) + (rgb.g << 8) + rgb.b;
-	/*
-	rgb.r = (color >> 16);
-	rgb.g = (color >> 8);
-	rgb.b = color;
-	rgb = shift_hue(rgb, shift);
-	*/
 	color = (rgb.r << 16) + (rgb.g << 8) + rgb.b;
 	*(unsigned int*)dst = color;
 }

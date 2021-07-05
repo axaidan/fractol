@@ -26,8 +26,23 @@
 # define M_CLK 3
 
 /*	FRACTAL VARIABLES */
+# define MANDE 0
+# define JULIA 1
 # define BND_X -2.5
 # define BND_Y -1.0
+
+/*	JULIA PARAMS */
+/*
+#define cRe -0.7
+#define cIm 0.27015
+*/
+/*
+#define cRe -0.038088
+#define cIm 0.9754633
+*/
+#define cRe 0.285
+#define cIm 0.013
+
 
 /*	COLORS */
 # define BLACK 0x0

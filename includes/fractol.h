@@ -20,6 +20,7 @@
 # include "errors.h"
 
 /*	initializations.c */
+void	init_args_struct(t_args *args, int argc, char **argv);
 void	init_mlx_struct(t_mlx *mlx);
 void	init_variables(t_mlx *mlx);
 

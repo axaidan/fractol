@@ -1,5 +1,14 @@
 #include "fractol.h"
 
+void	init_args_struct(t_args *args, int argc, char **argv)
+{
+	args->argc = argc;
+	args->argv = argv;
+	args->set = -1;
+	args->j_params.real = 0.0;
+	args->j_params.imag = 0.0;
+}
+
 void	init_variables(t_mlx *mlx)
 {
 	mlx->scale = 1.0 / 128.0;
