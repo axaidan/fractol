@@ -2,11 +2,9 @@
 
 static long double	mini_atold(char *s, int *error)
 {
-	long int	i;
 	int			sign;
 	long int	n_part; 
 	long int	f_part;
-	long double	ld;
 	int			pow;
 	
 	sign = 1;
@@ -15,23 +13,21 @@ static long double	mini_atold(char *s, int *error)
 		sign = -1;
 		s++;
 	}
-	i = 0;
 	n_part = 0;
-	while (s[i] && ft_isdigit(s[i]))
-		n_part = n_part * 10 + s[i++] - '0';
-	if (s[i] == '.')
-		i++;
+	while (*s && ft_isdigit(*s))
+		n_part = n_part * 10 + *(s++) - '0';
+	if (*s == '.')
+		s++;
 	f_part = 0;
 	pow = 1;
-	while (s[i] && ft_isdigit(s[i]))
+	while (*s && ft_isdigit(*s))
 	{
-		f_part = f_part * 10 + s[i++] - '0';
+		f_part = f_part * 10 + *(s++) - '0';
 		pow *= 10;
 	}
-	if (s[i] != '\0' && ft_isdigit(s[i]) == FALSE)
+	if (*s != '\0' && ft_isdigit(*s == FALSE))
 		*error = ER_BAD_JPRMS;
-	ld = sign * ((long double)n_part + ((long double)f_part / pow));
-	return (ld);
+	return(sign * ((long double)n_part + ((long double)f_part / pow)));
 }
 
 static int get_julia_params(t_args *args)

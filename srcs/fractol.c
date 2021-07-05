@@ -1,36 +1,35 @@
 #include "fractol.h"
 
 /*
-long double	scale_coord(long double var, long double inf_bnd, long double res)
-{
-	long double	interval;
+   long double	scale_coord(long double var, long double inf_bnd, long double res)
+   {
+   long double	interval;
 
-	interval = 1.0 - (inf_bnd);
-	return (((var * interval) / res) + inf_bnd);
-}
-*/
+   interval = 1.0 - (inf_bnd);
+   return (((var * interval) / res) + inf_bnd);
+   }
+   */
 
-int	continuous_pixel_scaling(int ite, t_cpx c2)
+int	continuous_pixel_scaling(int ite, t_cpx c2, int set)
 {
 	t_rgb		rgb;
-	long double continuous_index;
+	long double cont_i;
 
-//	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.real)) / logl(2));
-//	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.imag)) / logl(2));
-//	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.real + c2.real)) / logl(2));
-	/* if / else ONLY FOR julia() */
-	if (c2.real + c2.imag > -0.18 && c2.real + c2.imag < 0.18)
-	continuous_index = ite + 1.0 - logl(2) / logl(2);
+	//	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.real)) / logl(2));
+	//	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.imag)) / logl(2));
+	//	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.real + c2.real)) / logl(2));
+	if (set == JULIA && c2.real + c2.imag > -0.18 && c2.real + c2.imag < 0.18)
+		cont_i = ite;
 	else
-	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.real)) / logl(2));
-	rgb.r = (unsigned char)(sin(0.016 * continuous_index + 3) * 127.5 + 127.5);
-	rgb.g = ((unsigned char)(sin(0.011 * continuous_index + 2) * 127.5 + 127.5));
-	rgb.b = ((unsigned char)(sin(0.062 * continuous_index + 1) * 127.5 + 127.5));
+		cont_i = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.real)) / logl(2));
 	/*
-	rgb.r = (unsigned char)(sin(0.050 * continuous_index + 3) * 75 + 180);
-	rgb.g = ((unsigned char)(sin(0.089 * continuous_index + 2) * 75 + 180));
-	rgb.b = ((unsigned char)(sin(0.075 * continuous_index + 4) * 75 + 180));
+	rgb.r = (unsigned char)(sin(0.016 * cont_i + 3) * 127.5 + 127.5);
+	rgb.g = ((unsigned char)(sin(0.011 * cont_i + 2) * 127.5 + 127.5));
+	rgb.b = ((unsigned char)(sin(0.062 * cont_i + 1) * 127.5 + 127.5));
 	*/
+	rgb.r = (unsigned char)(sin(0.050 * cont_i + 3) * 75 + 180);
+	rgb.g = ((unsigned char)(sin(0.089 * cont_i + 2) * 75 + 180));
+	rgb.b = ((unsigned char)(sin(0.075 * cont_i + 1) * 75 + 180));
 	ite = (rgb.r << 16);
 	ite += (rgb.g << 8);
 	ite += rgb.b;
@@ -59,17 +58,17 @@ int	mandelbrot(t_cpx scaled, int max)
 	if (ite == max) 
 		return (BLACK);
 	else
-	//	return (continuous_pixel_scaling(ite, c2));
+		return (continuous_pixel_scaling(ite, c2, MANDE));
 	//		return (ite);
 	//		return (ite * ite);
-			return (ite * ite * ite);
+	//		return (ite * ite * ite);
 	//		return ((ite % 255 << 16) + (ite % 255 << 8) + (ite % 255));
 }
 
 int	julia(t_cpx c0, int max, t_cpx params)
 {
 	t_cpx		c;
-//	long double	real_temp;
+	//	long double	real_temp;
 	int			i;
 
 	i = 0;
@@ -77,18 +76,18 @@ int	julia(t_cpx c0, int max, t_cpx params)
 	{
 		c.real = c0.real;		// X
 		c.imag = c0.imag;		// Y
-//		real_temp = c.real * c.real - c.imag * c.imag + c0.real;
-//		c.imag = 2.0 * c.real * c.imag + c0.imag;
+		//		real_temp = c.real * c.real - c.imag * c.imag + c0.real;
+		//		c.imag = 2.0 * c.real * c.imag + c0.imag;
 		c0.real = c.real * c.real - c.imag * c.imag + params.real;
 		c0.imag = 2.0 * c.real * c.imag + params.imag;
-//		c0.real = real_temp;
+		//		c0.real = real_temp;
 		i++;
 	}
 	if (i == max)
 		return (BLACK);
 	else
-//		return (i * i * i);
-		return (continuous_pixel_scaling(i, c0));
+		//return (i * i * i);
+		return (continuous_pixel_scaling(i, c0, JULIA));
 }	
 
 void	draw_fractal(t_mlx *mlx)
@@ -110,9 +109,9 @@ void	draw_fractal(t_mlx *mlx)
 		{
 			scaled.real = (pix.x - (long double)RES_X / 2.0) * mlx->scale + mlx->pos.x;
 			if (mlx->set == MANDE)
-			color = mandelbrot(scaled, mlx->max_ite);
+				color = mandelbrot(scaled, mlx->max_ite);
 			else
-			color = julia(scaled, mlx->max_ite, mlx->j_params);
+				color = julia(scaled, mlx->max_ite, mlx->j_params);
 			my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
 			pix.x++;
 		}

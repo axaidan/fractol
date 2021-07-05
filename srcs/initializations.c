@@ -11,14 +11,21 @@ void	init_args_struct(t_args *args, int argc, char **argv)
 
 void	init_variables(t_mlx *mlx)
 {
+	static int	first_time = TRUE;
+
+
 	mlx->scale = 1.0 / 128.0;
 	mlx->pos.x = 0.0;
 	mlx->pos.y = 0.0;
 	mlx->max_ite = 256;
 	mlx->shift = FALSE;
-	mlx->set = MANDE;
-	mlx->j_params.real = 0.0;
-	mlx->j_params.imag = 0.0;
+	if (first_time == TRUE)
+	{
+		mlx->set = MANDE;
+		mlx->j_params.real = 0.0;
+		mlx->j_params.imag = 0.0;
+	}
+	first_time = FALSE;
 }
 
 void	init_mlx_struct(t_mlx *mlx)
@@ -31,10 +38,10 @@ void	init_mlx_struct(t_mlx *mlx)
 	mlx->img.l_len = -1;
 	mlx->img.endian = -1;
 	/*
-	mlx->scale = 1.0 / 128.0;
-	mlx->pos.x = 0.0;
-	mlx->pos.y = 0.0;
-	mlx->max_ite = 256;
-	*/
+	   mlx->scale = 1.0 / 128.0;
+	   mlx->pos.x = 0.0;
+	   mlx->pos.y = 0.0;
+	   mlx->max_ite = 256;
+	   */
 	init_variables(mlx);
 }
