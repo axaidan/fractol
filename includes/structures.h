@@ -54,6 +54,7 @@ typedef struct	s_mlx
 	int		shift;
 	int		set;
 	t_cpx	j_params;
+	int		(*render)(int, t_cpx, int);
 }				t_mlx;
 
 #endif

@@ -9,7 +9,8 @@ SRCS		=	main.c \
 				fractol.c \
 				utils_mlx.c \
 				hooks.c \
-				display.c
+				display.c \
+				render.c
 
 SRCS_DIR	=	srcs
 

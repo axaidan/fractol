@@ -24,6 +24,7 @@ void	init_variables(t_mlx *mlx)
 		mlx->set = MANDE;
 		mlx->j_params.real = 0.0;
 		mlx->j_params.imag = 0.0;
+		mlx->render = simple_ite;
 	}
 	first_time = FALSE;
 }

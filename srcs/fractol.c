@@ -1,42 +1,16 @@
 #include "fractol.h"
 
 /*
-   long double	scale_coord(long double var, long double inf_bnd, long double res)
-   {
-   long double	interval;
-
-   interval = 1.0 - (inf_bnd);
-   return (((var * interval) / res) + inf_bnd);
-   }
-   */
-
-int	continuous_pixel_scaling(int ite, t_cpx c2, int set)
+long double	scale_coord(long double var, long double inf_bnd, long double res)
 {
-	t_rgb		rgb;
-	long double cont_i;
+long double	interval;
 
-	//	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.real)) / logl(2));
-	//	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.imag)) / logl(2));
-	//	continuous_index = ite + 1.0 - ((logl(2) / fabsl(c2.real + c2.real)) / logl(2));
-	if (set == JULIA && c2.real + c2.imag > -0.18 && c2.real + c2.imag < 0.18)
-		cont_i = ite;
-	else
-		cont_i = ite + 1.0 - ((logl(2) / fabsl(c2.imag + c2.real)) / logl(2));
-	/*
-	rgb.r = (unsigned char)(sin(0.016 * cont_i + 3) * 127.5 + 127.5);
-	rgb.g = ((unsigned char)(sin(0.011 * cont_i + 2) * 127.5 + 127.5));
-	rgb.b = ((unsigned char)(sin(0.062 * cont_i + 1) * 127.5 + 127.5));
-	*/
-	rgb.r = (unsigned char)(sin(0.050 * cont_i + 3) * 75 + 180);
-	rgb.g = ((unsigned char)(sin(0.089 * cont_i + 2) * 75 + 180));
-	rgb.b = ((unsigned char)(sin(0.075 * cont_i + 1) * 75 + 180));
-	ite = (rgb.r << 16);
-	ite += (rgb.g << 8);
-	ite += rgb.b;
-	return (ite);
+interval = 1.0 - (inf_bnd);
+return (((var * interval) / res) + inf_bnd);
 }
+*/
 
-int	mandelbrot(t_cpx scaled, int max)
+int	mandelbrot(t_cpx scaled, int max, int (*render)(int, t_cpx, int))
 {
 	t_cpx	c1;
 	t_cpx	c2;
@@ -58,14 +32,14 @@ int	mandelbrot(t_cpx scaled, int max)
 	if (ite == max) 
 		return (BLACK);
 	else
-		return (continuous_pixel_scaling(ite, c2, MANDE));
+		return (render(ite, c2, MANDE));
 	//		return (ite);
 	//		return (ite * ite);
 	//		return (ite * ite * ite);
 	//		return ((ite % 255 << 16) + (ite % 255 << 8) + (ite % 255));
 }
 
-int	julia(t_cpx c0, int max, t_cpx params)
+int	julia(t_cpx c0, int max, t_cpx params, int (*render)(int, t_cpx, int))
 {
 	t_cpx		c;
 	//	long double	real_temp;
@@ -87,7 +61,7 @@ int	julia(t_cpx c0, int max, t_cpx params)
 		return (BLACK);
 	else
 		//return (i * i * i);
-		return (continuous_pixel_scaling(i, c0, JULIA));
+		return (render(i, c0, JULIA));
 }	
 
 void	draw_fractal(t_mlx *mlx)
@@ -106,9 +80,9 @@ void	draw_fractal(t_mlx *mlx)
 		{
 			scaled.real = (pix.x - (long double)RES_X / 2.0) * mlx->scale + mlx->pos.x;
 			if (mlx->set == MANDE)
-				color = mandelbrot(scaled, mlx->max_ite);
+				color = mandelbrot(scaled, mlx->max_ite, mlx->render);
 			else
-				color = julia(scaled, mlx->max_ite, mlx->j_params);
+				color = julia(scaled, mlx->max_ite, mlx->j_params, mlx->render);
 			my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
 			display_render_progress(pix);
 			pix.x++;

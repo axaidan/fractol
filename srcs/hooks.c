@@ -17,6 +17,11 @@ int	key_pressed(int key, t_mlx *mlx)
 		init_variables(mlx);
 		draw_fractal(mlx);
 	}
+	else if (key == 'm')
+	{
+		change_render_method(mlx);
+		draw_fractal(mlx);
+	}
 	else if (key == 's' && mlx->shift == FALSE)
 		mlx->shift = TRUE;
 	else if (key == 's' && mlx->shift == TRUE)
