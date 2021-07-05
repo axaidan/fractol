@@ -66,7 +66,7 @@ int	mandelbrot(t_cpx scaled, int max)
 	//		return ((ite % 255 << 16) + (ite % 255 << 8) + (ite % 255));
 }
 
-int	julia(t_cpx c0, int max)
+int	julia(t_cpx c0, int max, t_cpx params)
 {
 	t_cpx		c;
 //	long double	real_temp;
@@ -77,17 +77,17 @@ int	julia(t_cpx c0, int max)
 	{
 		c.real = c0.real;		// X
 		c.imag = c0.imag;		// Y
-//		real_temp = c.real * c.real - c.imag * c.imag + /*-0.7*/ c0.real;
-//		c.imag = 2.0 * c.real * c.imag + /*0.27015*/ c0.imag;
-		c0.real = c.real * c.real - c.imag * c.imag + cRe;
-		c0.imag = 2.0 * c.real * c.imag + cIm;
+//		real_temp = c.real * c.real - c.imag * c.imag + c0.real;
+//		c.imag = 2.0 * c.real * c.imag + c0.imag;
+		c0.real = c.real * c.real - c.imag * c.imag + params.real;
+		c0.imag = 2.0 * c.real * c.imag + params.imag;
 //		c0.real = real_temp;
 		i++;
 	}
 	if (i == max)
 		return (BLACK);
 	else
-		//return (i*i*i);
+//		return (i * i * i);
 		return (continuous_pixel_scaling(i, c0));
 }	
 
@@ -109,8 +109,10 @@ void	draw_fractal(t_mlx *mlx)
 		while (pix.x < RES_X)
 		{
 			scaled.real = (pix.x - (long double)RES_X / 2.0) * mlx->scale + mlx->pos.x;
-//			color = mandelbrot(scaled, mlx->max_ite);
-			color = julia(scaled, mlx->max_ite);
+			if (mlx->set == MANDE)
+			color = mandelbrot(scaled, mlx->max_ite);
+			else
+			color = julia(scaled, mlx->max_ite, mlx->j_params);
 			my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
 			pix.x++;
 		}

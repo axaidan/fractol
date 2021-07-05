@@ -1,8 +1,85 @@
 #include "fractol.h"
 
+static long double	mini_atold(char *s, int *error)
+{
+	long int	i;
+	int			sign;
+	long int	n_part; 
+	long int	f_part;
+	long double	ld;
+	int			pow;
+	
+	sign = 1;
+	if (*s == '-')
+	{
+		sign = -1;
+		s++;
+	}
+	i = 0;
+	n_part = 0;
+	while (s[i] && ft_isdigit(s[i]))
+		n_part = n_part * 10 + s[i++] - '0';
+	if (s[i] == '.')
+		i++;
+	f_part = 0;
+	pow = 1;
+	while (s[i] && ft_isdigit(s[i]))
+	{
+		f_part = f_part * 10 + s[i++] - '0';
+		pow *= 10;
+	}
+	if (s[i] != '\0' && ft_isdigit(s[i]) == FALSE)
+		*error = ER_BAD_JPRMS;
+	ld = sign * ((long double)n_part + ((long double)f_part / pow));
+	return (ld);
+}
+
+static int get_julia_params(t_args *args)
+{
+	int	error;
+
+	error = 0;
+	args->j_params.real = mini_atold(args->argv[2], &error);
+	printf("j_p.real = %Lf\n", args->j_params.real);
+	if (error)
+		return (close_mlx(NULL, error));
+	args->j_params.imag = mini_atold(args->argv[3], &error);
+	printf("j_p.imag = %Lf\n", args->j_params.imag);
+	if (error)
+		return (close_mlx(NULL, error));
+	return (SUCCESS);
+}
+
+int	check_args(t_args *args)
+{
+	int	error;
+
+	error = 0;
+	if (args->argc != 1 && args->argc != 2 && args->argc != 4)
+		return (close_mlx(NULL, ER_BAD_ARGC));
+	if (ft_strncmp("mandelbrot", args->argv[1], 11) == 0)
+		args->set = MANDE;
+	else if (ft_strncmp("julia", args->argv[1], 6) == 0)
+		args->set = JULIA;
+	else
+		return (close_mlx(NULL, ER_BAD_SET));
+	if (args->set == JULIA && args->argc == 4)
+	{
+		error = get_julia_params(args);
+		if (error)
+			return (close_mlx(NULL, ER_BAD_JPRMS));
+	}
+	else if (args->set == JULIA && args->argc == 2)
+	{
+		args->j_params.real = cRe;
+		args->j_params.imag = cIm;
+	}
+	return (SUCCESS);
+}
+
 int	close_mlx(t_mlx *mlx, int error)
 {
-	if (mlx->mlx_ptr)
+	if (mlx && mlx->mlx_ptr)
 	{
 		if (mlx->win_ptr)
 			mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);

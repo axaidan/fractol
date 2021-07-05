@@ -11,5 +11,17 @@ int	print_ret_err(int error)
 		ft_putendl_fd("mlx_new_window()", STDERR_FILENO);
 	else if (error == ER_IMG_CREA)
 		ft_putendl_fd("mlx_new_image()", STDERR_FILENO);
+	else if (error == ER_BAD_SET)
+		ft_putendl_fd("arg one \'set\' neither \"mandelbrot\" nor \"julia\"",
+			STDERR_FILENO);
+	else if (error == ER_BAD_ARGC)
+		ft_putendl_fd("program takes zero, one or three arguments",
+			STDERR_FILENO);
+	else if (error == ER_BAD_JPRMS)
+		ft_putendl_fd("julia parameters must be numeric", STDERR_FILENO);
+	else if (error == ER_ZERO_JPRM)
+		ft_putendl_fd("julia parameter must not be zero", STDERR_FILENO);
+//	if (error > ER_BAD_ARGC)
+//		display_help();
 	return (error);
 }

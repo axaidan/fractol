@@ -4,9 +4,9 @@ void	init_args_struct(t_args *args, int argc, char **argv)
 {
 	args->argc = argc;
 	args->argv = argv;
-	args->set = -1;
-	args->j_params.real = 0.0;
-	args->j_params.imag = 0.0;
+	args->set = MANDE;
+	args->j_params.real = cRe;
+	args->j_params.imag = cIm;
 }
 
 void	init_variables(t_mlx *mlx)
@@ -16,6 +16,9 @@ void	init_variables(t_mlx *mlx)
 	mlx->pos.y = 0.0;
 	mlx->max_ite = 256;
 	mlx->shift = FALSE;
+	mlx->set = MANDE;
+	mlx->j_params.real = 0.0;
+	mlx->j_params.imag = 0.0;
 }
 
 void	init_mlx_struct(t_mlx *mlx)

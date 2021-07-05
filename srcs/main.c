@@ -9,6 +9,14 @@ int main(int argc, char *argv[])
 	error = 0;
 	init_mlx_struct(&mlx);
 	init_args_struct(&args, argc, argv);
+	if (argc > 1)
+	{
+		error = check_args(&args);
+		if (error)
+			return (error);
+		mlx.j_params = args.j_params;
+		mlx.set = args.set;
+	}
 	error = start_mlx(&mlx);
 	if (error)
 		return (error);

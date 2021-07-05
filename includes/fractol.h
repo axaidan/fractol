@@ -27,6 +27,7 @@ void	init_variables(t_mlx *mlx);
 /*	system.c */
 int		start_mlx(t_mlx *mlx);
 int		close_mlx(t_mlx *mlx, int error);
+int		check_args(t_args *args);
 
 /*	errors.c */
 int		print_ret_err(int error);

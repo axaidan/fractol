@@ -52,6 +52,8 @@ typedef struct	s_mlx
 	t_pos	pos;
 	int		max_ite;
 	int		shift;
+	int		set;
+	t_cpx	j_params;
 }				t_mlx;
 
 #endif
