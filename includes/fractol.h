@@ -57,4 +57,7 @@ int		square_ite(int ite, t_cpx c, int set);
 int		cube_ite(int ite, t_cpx c, int set);
 int		black_and_white(int ite, t_cpx c, int set);
 
+/*	move.c */
+void	move_fractal(t_mlx *mlx, int key);
+
 #endif

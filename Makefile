@@ -10,7 +10,8 @@ SRCS		=	main.c \
 				utils_mlx.c \
 				hooks.c \
 				display.c \
-				render.c
+				render.c \
+				move.c
 
 SRCS_DIR	=	srcs
 

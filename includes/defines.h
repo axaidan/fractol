@@ -17,6 +17,10 @@
 # define ESC 65307
 # define PLUS 65451
 # define MINUS 65453
+# define UP_ARR 65362
+# define DN_ARR 65364
+# define LE_ARR 65361
+# define RI_ARR 65363
 
 /*	MOUSE CODES */
 # define UP_SCR 4

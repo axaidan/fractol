@@ -21,7 +21,6 @@ void    change_render_method(t_mlx *mlx)
 
 int	key_pressed(int key, t_mlx *mlx)
 {
-	printf("key = %d\n", key);
 	if (key == ESC)
 		close_mlx(mlx, FALSE);
 	else if (key == PLUS || key == MINUS || key == 'm' || key == 'r')
@@ -36,6 +35,8 @@ int	key_pressed(int key, t_mlx *mlx)
 			change_render_method(mlx);
 		draw_fractal(mlx);
 	}
+	else if (key == UP_ARR || key == DN_ARR || key == LE_ARR || key == RI_ARR)
+		move_fractal(mlx, key);
 	else if (key == 's' && mlx->shift == FALSE)
 		mlx->shift = TRUE;
 	else if (key == 's' && mlx->shift == TRUE)
