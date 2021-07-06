@@ -20,7 +20,7 @@ t_rgb	shift_hue(t_rgb in, float shift)
 }
 */
 
-void	change_pixel(t_img *img, int x, int y, float shift)
+void	change_pixel(t_img *img, int x, int y, int shift)
 {
 	char			*dst;
 	t_rgb			rgb;
@@ -31,10 +31,14 @@ void	change_pixel(t_img *img, int x, int y, float shift)
 	color = *(unsigned int *)dst;
 	if (color == BLACK)
 		return ;
-	rgb.r = (color >> 16) - 1;
-	rgb.g = (color >> 8) - 1;
-	rgb.b = color - 1;
-	color = (rgb.r << 16) + (rgb.g << 8) + rgb.b;
+	rgb.r = (color >> 16) + shift;
+	rgb.g = (color >> 8) + shift;
+	rgb.b = color + shift;
+	/*
+	rgb.r = shift * (float)(color >> 16);
+	rgb.g = shift * (float)(color >> 8);
+	rgb.b = shift * (float)color;
+	*/
 	color = (rgb.r << 16) + (rgb.g << 8) + rgb.b;
 	*(unsigned int*)dst = color;
 }

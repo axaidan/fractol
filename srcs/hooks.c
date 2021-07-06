@@ -21,6 +21,7 @@ void    change_render_method(t_mlx *mlx)
 
 int	key_pressed(int key, t_mlx *mlx)
 {
+	printf("key = %d\n", key);
 	if (key == ESC)
 		close_mlx(mlx, FALSE);
 	else if (key == PLUS || key == MINUS || key == 'm' || key == 'r')
@@ -47,7 +48,6 @@ int	key_pressed(int key, t_mlx *mlx)
 int	mouse_used(int button, int x, int y, t_mlx *mlx)
 {
 	//	static int          zoom_lvl = 0;;
-	//	static long double  agrandissement = 1.0;
 
 	mlx->pos.x += (x - RES_X / 2) * mlx->scale;
 	mlx->pos.y += (y - RES_Y / 2) * mlx->scale;
@@ -57,7 +57,8 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 		mlx->scale /= 1.5;
 		if (mlx->max_ite > CH_ITE)
 			mlx->max_ite += CH_ITE;
-		//agrandissement *= 1.5;
+//		mlx->pos.x -= (x - RES_X / 2) * mlx->scale;
+//		mlx->pos.y -= (y - RES_Y / 2) * mlx->scale;
 	}
 	else if (button == DN_SCR)
 	{
@@ -65,7 +66,8 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 		mlx->scale *= 1.5;
 		if (mlx->max_ite < LIM_ITE) 
 			mlx->max_ite -= CH_ITE;
-		//agrandissement /= 1.5;
+//		mlx->pos.x -= (x - RES_X / 2) * mlx->scale;
+//		mlx->pos.y -= (y - RES_Y / 2) * mlx->scale;
 	}
 	draw_fractal(mlx);
 	return (SUCCESS);
@@ -73,11 +75,16 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 
 int	shift_colors(t_mlx *mlx)
 {
-	t_pt			pix;
-	static float	shift = 0.0;
-	float			sinusoid;
+	t_pt					pix;
+	int						inc_dec;
+	static unsigned char	shift = 0;
 
-	sinusoid = sin(shift);
+
+	if (shift == 0)
+		inc_dec = 1;
+	if (shift == 255)
+		inc_dec = -1;
+	shift += inc_dec;
 	if (mlx->shift == TRUE)
 	{
 		pix.y = 0;
@@ -86,7 +93,7 @@ int	shift_colors(t_mlx *mlx)
 			pix.x = 0;
 			while (pix.x < RES_X)
 			{
-				change_pixel(&mlx->img, pix.x, pix.y, sinusoid);
+				change_pixel(&mlx->img, pix.x, pix.y, inc_dec);
 				pix.x++;
 			}
 			pix.y++;
@@ -94,6 +101,5 @@ int	shift_colors(t_mlx *mlx)
 		mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,
 				0, 0);
 	}
-	shift += 0.01;
 	return (SUCCESS);
 }

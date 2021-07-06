@@ -38,7 +38,7 @@ void	draw_fractal(t_mlx *mlx);
 
 /*	utils_mlx.c */
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-void	change_pixel(t_img *img, int x, int y/*TEST*/, float shift);
+void	change_pixel(t_img *img, int x, int y/*TEST*/, int shift);
 
 /*	hooks.c */
 int		mouse_used(int button, int x, int y, t_mlx *mlx);
