@@ -29,38 +29,31 @@ int	mandelbrot(t_cpx scaled, int max, int (*render)(int, t_cpx, int))
 		c2.imag = c1.imag * c1.imag;
 		ite++;
 	}
-	if (ite == max) 
+	if (ite == max)
 		return (BLACK);
 	else
 		return (render(ite, c2, MANDE));
-	//		return (ite);
-	//		return (ite * ite);
-	//		return (ite * ite * ite);
-	//		return ((ite % 255 << 16) + (ite % 255 << 8) + (ite % 255));
 }
 
 int	julia(t_cpx c0, int max, t_cpx params, int (*render)(int, t_cpx, int))
 {
 	t_cpx		c;
-	//	long double	real_temp;
+	long double	real_temp;
 	int			i;
 
 	i = 0;
-	while (c0.real * c0.real + c0.imag * c0.imag <= 2 * 2 && i < max)
+	while (c0.real * c0.real + c0.imag * c0.imag <= 4 && i < max)
 	{
 		c.real = c0.real;
 		c.imag = c0.imag;
-		//		real_temp = c.real * c.real - c.imag * c.imag + c0.real;
-		//		c.imag = 2.0 * c.real * c.imag + c0.imag;
-		c0.real = c.real * c.real - c.imag * c.imag + params.real;
+		real_temp = c.real * c.real - c.imag * c.imag + params.real;
 		c0.imag = 2.0 * c.real * c.imag + params.imag;
-		//		c0.real = real_temp;
+		c0.real = real_temp;
 		i++;
 	}
 	if (i == max)
 		return (BLACK);
 	else
-		//return (i * i * i);
 		return (render(i, c0, JULIA));
 }	
 
@@ -71,14 +64,13 @@ void	draw_fractal(t_mlx *mlx)
 	int		color;
 
 	pix.y = 0;
-
 	while (pix.y < RES_Y)
 	{
-		scaled.imag = (pix.y - (long double)RES_Y / 2.0) * mlx->scale + mlx->pos.y;
+		scaled.imag = (pix.y - RES_Y / 2.0) * mlx->scale + mlx->pos.y;
 		pix.x = 0;
 		while (pix.x < RES_X)
 		{
-			scaled.real = (pix.x - (long double)RES_X / 2.0) * mlx->scale + mlx->pos.x;
+			scaled.real = (pix.x - RES_X / 2.0) * mlx->scale + mlx->pos.x;
 			if (mlx->set == MANDE)
 				color = mandelbrot(scaled, mlx->max_ite, mlx->render);
 			else
@@ -90,7 +82,7 @@ void	draw_fractal(t_mlx *mlx)
 		pix.y++;
 	}
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,
-			0, 0);
+		0, 0);
 }
 
 int	fractol(t_mlx *mlx)

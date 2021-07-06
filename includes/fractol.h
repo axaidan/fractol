@@ -44,6 +44,7 @@ void	change_pixel(t_img *img, int x, int y/*TEST*/, float shift);
 int		mouse_used(int button, int x, int y, t_mlx *mlx);
 int		key_pressed(int key, t_mlx *mlx);
 int		shift_colors(t_mlx *mlx);
+void	change_render_method(t_mlx *mlx);
 
 /*	display.c */
 void	display_info(t_mlx *mlx);
@@ -54,6 +55,6 @@ int		continuous_pixel_scaling(int ite, t_cpx c2, int set);
 int		simple_ite(int ite, t_cpx c, int set);
 int		square_ite(int ite, t_cpx c, int set);
 int		cube_ite(int ite, t_cpx c, int set);
-void	change_render_method(t_mlx *mlx);
+int		black_and_white(int ite, t_cpx c, int set);
 
 #endif

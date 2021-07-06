@@ -1,25 +1,38 @@
 #include "fractol.h"
 
+void    change_render_method(t_mlx *mlx)
+{
+	static int  i = 0;
+
+	i++;
+	if (i == 5)
+		i = 0;
+	if (i == 0)
+		mlx->render = simple_ite;
+	else if (i == 1)
+		mlx->render = square_ite;
+	else if (i == 2)
+		mlx->render = cube_ite;
+	else if (i == 3)
+		mlx->render = continuous_pixel_scaling;
+	else if (i == 4)
+		mlx->render = black_and_white;
+}   
+
 int	key_pressed(int key, t_mlx *mlx)
 {
 	if (key == ESC)
 		close_mlx(mlx, FALSE);
-	else if (key == PLUS || key == MINUS)
+	else if (key == PLUS || key == MINUS || key == 'm' || key == 'r')
 	{
 		if (key == PLUS)
-			mlx->max_ite += 16;
-		if (key == MINUS)
-			mlx->max_ite -= 16;
-		draw_fractal(mlx);
-	}
-	else if (key == 'r')
-	{
-		init_variables(mlx);
-		draw_fractal(mlx);
-	}
-	else if (key == 'm')
-	{
-		change_render_method(mlx);
+			mlx->max_ite += 8;
+		else if (key == MINUS)
+			mlx->max_ite -= 8;
+		else if (key == 'r')
+			init_variables(mlx);
+		else if (key == 'm')
+			change_render_method(mlx);
 		draw_fractal(mlx);
 	}
 	else if (key == 's' && mlx->shift == FALSE)
@@ -42,14 +55,14 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 	{
 		//zoom_lvl++;
 		mlx->scale /= 1.5;
-		mlx->max_ite += 16;
+		mlx->max_ite += 8;
 		//agrandissement *= 1.5;
 	}
 	else if (button == DN_SCR)
 	{
 		//zoom_lvl--;
 		mlx->scale *= 1.5;
-		mlx->max_ite -= 16;
+		mlx->max_ite -= 8;
 		//agrandissement /= 1.5;
 	}
 	draw_fractal(mlx);
