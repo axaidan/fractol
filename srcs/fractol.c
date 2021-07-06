@@ -1,15 +1,5 @@
 #include "fractol.h"
 
-/*
-long double	scale_coord(long double var, long double inf_bnd, long double res)
-{
-long double	interval;
-
-interval = 1.0 - (inf_bnd);
-return (((var * interval) / res) + inf_bnd);
-}
-*/
-
 int	mandelbrot(t_cpx scaled, int max, int (*render)(int, t_cpx, int))
 {
 	t_cpx	c1;

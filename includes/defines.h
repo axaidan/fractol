@@ -30,6 +30,8 @@
 # define JULIA 1
 # define BND_X -2.5
 # define BND_Y -1.0
+# define CH_ITE 8
+# define LIM_ITE 1056
 
 /*	JULIA PARAMS */
 /*

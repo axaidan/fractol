@@ -25,10 +25,10 @@ int	key_pressed(int key, t_mlx *mlx)
 		close_mlx(mlx, FALSE);
 	else if (key == PLUS || key == MINUS || key == 'm' || key == 'r')
 	{
-		if (key == PLUS)
-			mlx->max_ite += 8;
-		else if (key == MINUS)
-			mlx->max_ite -= 8;
+		if (key == PLUS && mlx->max_ite < LIM_ITE)
+			mlx->max_ite += CH_ITE;
+		else if (key == MINUS && mlx->max_ite > CH_ITE)
+			mlx->max_ite -= CH_ITE;
 		else if (key == 'r')
 			init_variables(mlx);
 		else if (key == 'm')
@@ -55,14 +55,16 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 	{
 		//zoom_lvl++;
 		mlx->scale /= 1.5;
-		mlx->max_ite += 8;
+		if (mlx->max_ite > CH_ITE)
+			mlx->max_ite += CH_ITE;
 		//agrandissement *= 1.5;
 	}
 	else if (button == DN_SCR)
 	{
 		//zoom_lvl--;
 		mlx->scale *= 1.5;
-		mlx->max_ite -= 8;
+		if (mlx->max_ite < LIM_ITE) 
+			mlx->max_ite -= CH_ITE;
 		//agrandissement /= 1.5;
 	}
 	draw_fractal(mlx);
