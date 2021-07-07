@@ -36,6 +36,7 @@
 # define BND_Y -1.0
 # define CH_ITE 8
 # define LIM_ITE 1056
+# define MOVE_PERCENTAGE 90 
 
 /*	JULIA PARAMS */
 /*

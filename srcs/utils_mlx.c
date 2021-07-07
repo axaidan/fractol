@@ -25,7 +25,6 @@ void	change_pixel(t_img *img, int x, int y, int shift)
 	char			*dst;
 	t_rgb			rgb;
 	int				color;
-	(void)shift;
 
 	dst = img->addr + (y * img->l_len + x * (img->bpp / 8));
 	color = *(unsigned int *)dst;
@@ -34,11 +33,6 @@ void	change_pixel(t_img *img, int x, int y, int shift)
 	rgb.r = (color >> 16) + shift;
 	rgb.g = (color >> 8) + shift;
 	rgb.b = color + shift;
-	/*
-	rgb.r = shift * (float)(color >> 16);
-	rgb.g = shift * (float)(color >> 8);
-	rgb.b = shift * (float)color;
-	*/
 	color = (rgb.r << 16) + (rgb.g << 8) + rgb.b;
 	*(unsigned int*)dst = color;
 }

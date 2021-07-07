@@ -1,5 +1,37 @@
 #include "fractol.h"
 
+void	init_start_bounds_pts(int key, t_pt *start, t_pt *bounds)
+{
+	if (key == UP_ARR)
+	{
+		start->x = 0;
+		start->y = 0;
+		bounds->x = RES_X;
+		bounds->y = RES_Y - RES_Y / MOVE_PERCENTAGE;
+	}
+	else if (key == DN_ARR)
+	{
+		start->x = 0;
+		start->y = RES_Y - RES_Y / MOVE_PERCENTAGE;
+		bounds->x = RES_X;
+		bounds->y = RES_Y;
+	}
+	else if (key == LE_ARR)
+	{
+		start->x = 0;
+		start->y = 0;
+		bounds->x = RES_X - RES_X / MOVE_PERCENTAGE;
+		bounds->y = RES_Y;
+	}
+	else
+	{
+		start->x = RES_X - RES_X / MOVE_PERCENTAGE;
+		start->y = 0;
+		bounds->x = RES_X;
+		bounds->y = RES_Y;
+	}
+}
+
 void	init_args_struct(t_args *args, int argc, char **argv)
 {
 	args->argc = argc;
@@ -24,7 +56,7 @@ void	init_variables(t_mlx *mlx)
 		mlx->set = MANDE;
 		mlx->j_params.real = 0.0;
 		mlx->j_params.imag = 0.0;
-		mlx->render = simple_ite;
+		mlx->render = continuous_pixel_scaling;
 	}
 	first_time = FALSE;
 }

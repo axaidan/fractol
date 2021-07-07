@@ -23,6 +23,7 @@
 void	init_args_struct(t_args *args, int argc, char **argv);
 void	init_mlx_struct(t_mlx *mlx);
 void	init_variables(t_mlx *mlx);
+void	init_start_bounds_pts(int key, t_pt *pix, t_pt *bounds);
 
 /*	system.c */
 int		start_mlx(t_mlx *mlx);
@@ -33,6 +34,8 @@ int		check_args(t_args *args);
 int		print_ret_err(int error);
 
 /*	fractol.c */
+int		julia(t_cpx c0, int max, t_cpx params, int (*render)(int, t_cpx, int));
+int		mandelbrot(t_cpx scaled, int max, int (*render)(int, t_cpx, int));
 int		fractol(t_mlx *mlx);
 void	draw_fractal(t_mlx *mlx);
 

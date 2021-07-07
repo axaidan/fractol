@@ -2,7 +2,7 @@
 
 void    change_render_method(t_mlx *mlx)
 {
-	static int  i = 0;
+	static int  i = 2;
 
 	i++;
 	if (i == 5)
@@ -58,8 +58,8 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 		mlx->scale /= 1.5;
 		if (mlx->max_ite > CH_ITE)
 			mlx->max_ite += CH_ITE;
-//		mlx->pos.x -= (x - RES_X / 2) * mlx->scale;
-//		mlx->pos.y -= (y - RES_Y / 2) * mlx->scale;
+		//		mlx->pos.x -= (x - RES_X / 2) * mlx->scale;
+		//		mlx->pos.y -= (y - RES_Y / 2) * mlx->scale;
 	}
 	else if (button == DN_SCR)
 	{
@@ -67,8 +67,8 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 		mlx->scale *= 1.5;
 		if (mlx->max_ite < LIM_ITE) 
 			mlx->max_ite -= CH_ITE;
-//		mlx->pos.x -= (x - RES_X / 2) * mlx->scale;
-//		mlx->pos.y -= (y - RES_Y / 2) * mlx->scale;
+		//		mlx->pos.x -= (x - RES_X / 2) * mlx->scale;
+		//		mlx->pos.y -= (y - RES_Y / 2) * mlx->scale;
 	}
 	draw_fractal(mlx);
 	return (SUCCESS);
@@ -77,17 +77,17 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 int	shift_colors(t_mlx *mlx)
 {
 	t_pt					pix;
-	int						inc_dec;
+	static int				inc_dec;
 	static unsigned char	shift = 0;
 
 
-	if (shift == 0)
-		inc_dec = 1;
-	if (shift == 255)
-		inc_dec = -1;
-	shift += inc_dec;
 	if (mlx->shift == TRUE)
 	{
+		if (shift == 0)
+			inc_dec = 1;
+		if (shift == 255)
+			inc_dec = -1;
+		shift += inc_dec;
 		pix.y = 0;
 		while(pix.y < RES_Y)
 		{
