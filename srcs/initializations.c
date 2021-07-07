@@ -7,7 +7,7 @@ void	init_start_bounds_pts(int key, t_pt *start, t_pt *bounds)
 		start->x = 0;
 		start->y = 0;
 		bounds->x = RES_X;
-		bounds->y = RES_Y - RES_Y / MOVE_PERCENTAGE;
+		bounds->y = RES_Y / MOVE_PERCENTAGE;
 	}
 	else if (key == DN_ARR)
 	{
@@ -20,10 +20,10 @@ void	init_start_bounds_pts(int key, t_pt *start, t_pt *bounds)
 	{
 		start->x = 0;
 		start->y = 0;
-		bounds->x = RES_X - RES_X / MOVE_PERCENTAGE;
+		bounds->x = RES_X / MOVE_PERCENTAGE;
 		bounds->y = RES_Y;
 	}
-	else
+	else // if (key == RI_ARR)
 	{
 		start->x = RES_X - RES_X / MOVE_PERCENTAGE;
 		start->y = 0;

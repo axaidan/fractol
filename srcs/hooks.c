@@ -100,7 +100,7 @@ int	shift_colors(t_mlx *mlx)
 			pix.y++;
 		}
 		mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,
-				0, 0);
+			0, 0);
 	}
 	return (SUCCESS);
 }

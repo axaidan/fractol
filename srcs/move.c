@@ -12,8 +12,6 @@ void	move_pixels_horizontally(t_mlx *mlx, int key)
 	pix_arr = mlx->img.addr;
 	l_len = mlx->img.l_len;
 	offset = l_len / MOVE_PERCENTAGE;
-	printf("l_len = %d\n", l_len);
-	printf("offset = %d\n", offset);
 	y = 0;
 	while (y < RES_Y)
 	{
@@ -77,6 +75,7 @@ void	calculate_remaining(t_mlx *mlx, int key)
 
 	init_start_bounds_pts(key, &start, &bounds);
 	pix.y = start.y;
+	printf("remaining starting...\n");
 	while (pix.y < bounds.y)
 	{
 		scaled.imag = (pix.y - RES_Y / 2.0) * mlx->scale + mlx->pos.y;
@@ -93,10 +92,12 @@ void	calculate_remaining(t_mlx *mlx, int key)
 		}
 		pix.y++;
 	}
+	printf("remaining finished..\n");
 }
 
 void	move_fractal(t_mlx *mlx, int key)
 {
+	printf("moving starting...\n");
 	if (key == LE_ARR || key == RI_ARR)
 	{
 		move_pixels_horizontally(mlx, key);
@@ -115,6 +116,7 @@ void	move_fractal(t_mlx *mlx, int key)
 		move_pixels_down(mlx);
 		mlx->pos.y += (RES_Y / MOVE_PERCENTAGE) * mlx->scale;
 	}
+	printf("moving finished...\n");
 	calculate_remaining(mlx, key);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr, 0, 0);
 	return ;
