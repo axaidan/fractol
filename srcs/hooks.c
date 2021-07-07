@@ -43,6 +43,8 @@ int	key_pressed(int key, t_mlx *mlx)
 		mlx->shift = FALSE;
 	else if (key == 'i')
 		display_info(mlx);
+	else if (key == 'h')
+		display_controls();
 	return (SUCCESS);
 }
 
