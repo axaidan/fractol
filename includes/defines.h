@@ -40,16 +40,15 @@
 
 /*	JULIA PARAMS */
 /*
-#define cRe -0.7
-#define cIm 0.27015
+**#define cRe -0.7
+**#define cIm 0.27015
 */
 /*
-#define cRe -0.038088
-#define cIm 0.9754633
+**#define cRe -0.038088
+**#define cIm 0.9754633
 */
-#define cRe 0.285
-#define cIm 0.013
-
+# define C_RE 0.285
+# define C_IM 0.013
 
 /*	COLORS */
 # define BLACK 0x0

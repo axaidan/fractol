@@ -1,5 +1,10 @@
 #include "fractol.h"
 
+/*
+**	if (error > ER_BAD_ARGC)
+**		display_help();
+*/
+
 int	print_ret_err(int error)
 {
 	if (error == FALSE)
@@ -21,7 +26,7 @@ int	print_ret_err(int error)
 		ft_putendl_fd("julia parameters must be numeric", STDERR_FILENO);
 	else if (error == ER_ZERO_JPRM)
 		ft_putendl_fd("julia parameter must not be zero", STDERR_FILENO);
-//	if (error > ER_BAD_ARGC)
-//		display_help();
+	else if (error == ER_EMPTY_ARG)
+		ft_putendl_fd("empty argument", STDERR_FILENO);
 	return (error);
 }

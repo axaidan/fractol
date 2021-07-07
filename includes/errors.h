@@ -8,7 +8,8 @@ enum e_error_codes {
 	ER_BAD_ARGC,
 	ER_BAD_SET,
 	ER_BAD_JPRMS,
-	ER_ZERO_JPRM
+	ER_ZERO_JPRM,
+	ER_EMPTY_ARG
 };
 
 #endif

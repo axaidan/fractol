@@ -1,8 +1,8 @@
 #include "fractol.h"
 
-void    change_render_method(t_mlx *mlx)
+void	change_render_method(t_mlx *mlx)
 {
-	static int  i = 2;
+	static int	i = 2;
 
 	i++;
 	if (i == 5)
@@ -17,7 +17,7 @@ void    change_render_method(t_mlx *mlx)
 		mlx->render = continuous_pixel_scaling;
 	else if (i == 4)
 		mlx->render = black_and_white;
-}   
+}
 
 int	key_pressed(int key, t_mlx *mlx)
 {
@@ -48,27 +48,23 @@ int	key_pressed(int key, t_mlx *mlx)
 
 int	mouse_used(int button, int x, int y, t_mlx *mlx)
 {
-	//	static int          zoom_lvl = 0;;
-
 	mlx->pos.x += (x - RES_X / 2) * mlx->scale;
 	mlx->pos.y += (y - RES_Y / 2) * mlx->scale;
 	if (button == UP_SCR)
 	{
-		//zoom_lvl++;
 		mlx->scale /= 1.5;
 		if (mlx->max_ite > CH_ITE)
 			mlx->max_ite += CH_ITE;
-		//		mlx->pos.x -= (x - RES_X / 2) * mlx->scale;
-		//		mlx->pos.y -= (y - RES_Y / 2) * mlx->scale;
+		mlx->pos.x -= (x - RES_X / 2) * mlx->scale;
+		mlx->pos.y -= (y - RES_Y / 2) * mlx->scale;
 	}
 	else if (button == DN_SCR)
 	{
-		//zoom_lvl--;
 		mlx->scale *= 1.5;
-		if (mlx->max_ite < LIM_ITE) 
+		if (mlx->max_ite < LIM_ITE)
 			mlx->max_ite -= CH_ITE;
-		//		mlx->pos.x -= (x - RES_X / 2) * mlx->scale;
-		//		mlx->pos.y -= (y - RES_Y / 2) * mlx->scale;
+		mlx->pos.x -= (x - RES_X / 2) * mlx->scale;
+		mlx->pos.y -= (y - RES_Y / 2) * mlx->scale;
 	}
 	draw_fractal(mlx);
 	return (SUCCESS);
@@ -80,7 +76,6 @@ int	shift_colors(t_mlx *mlx)
 	static int				inc_dec;
 	static unsigned char	shift = 0;
 
-
 	if (mlx->shift == TRUE)
 	{
 		if (shift == 0)
@@ -89,14 +84,11 @@ int	shift_colors(t_mlx *mlx)
 			inc_dec = -1;
 		shift += inc_dec;
 		pix.y = 0;
-		while(pix.y < RES_Y)
+		while (pix.y < RES_Y)
 		{
 			pix.x = 0;
 			while (pix.x < RES_X)
-			{
-				change_pixel(&mlx->img, pix.x, pix.y, inc_dec);
-				pix.x++;
-			}
+				change_pixel(&mlx->img, pix.x++, pix.y, inc_dec);
 			pix.y++;
 		}
 		mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,

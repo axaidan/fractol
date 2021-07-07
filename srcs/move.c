@@ -1,13 +1,11 @@
 #include "fractol.h"
 
-//       void *memmove(void *dest, const void *src, size_t n);
-
 void	move_pixels_horizontally(t_mlx *mlx, int key)
 {
 	int		offset;
 	int		y;
 	char	*pix_arr;
-	int		l_len; // EN CHAR
+	int		l_len;
 
 	pix_arr = mlx->img.addr;
 	l_len = mlx->img.l_len;
@@ -17,12 +15,12 @@ void	move_pixels_horizontally(t_mlx *mlx, int key)
 	{
 		if (key == LE_ARR)
 			ft_memmove((pix_arr + (y * l_len)) + offset,
-					pix_arr + (y * l_len),
-					sizeof(int) * (RES_X - RES_X / MOVE_PERCENTAGE));
+				pix_arr + (y * l_len),
+				sizeof(int) * (RES_X - RES_X / MOVE_PERCENTAGE));
 		else if (key == RI_ARR)
 			ft_memmove(pix_arr + (y * l_len),
-					(pix_arr + (y * l_len)) + offset,
-					sizeof(int) * (RES_X - RES_X / MOVE_PERCENTAGE));
+				(pix_arr + (y * l_len)) + offset,
+				sizeof(int) * (RES_X - RES_X / MOVE_PERCENTAGE));
 		y++;
 	}
 }
@@ -75,7 +73,6 @@ void	calculate_remaining(t_mlx *mlx, int key)
 
 	init_start_bounds_pts(key, &start, &bounds);
 	pix.y = start.y;
-	printf("remaining starting...\n");
 	while (pix.y < bounds.y)
 	{
 		scaled.imag = (pix.y - RES_Y / 2.0) * mlx->scale + mlx->pos.y;
@@ -87,17 +84,15 @@ void	calculate_remaining(t_mlx *mlx, int key)
 				color = mandelbrot(scaled, mlx->max_ite, mlx->render);
 			else
 				color = julia(scaled, mlx->max_ite, mlx->j_params, mlx->render);
-            my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
+			my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
 			pix.x++;
 		}
 		pix.y++;
 	}
-	printf("remaining finished..\n");
 }
 
 void	move_fractal(t_mlx *mlx, int key)
 {
-	printf("moving starting...\n");
 	if (key == LE_ARR || key == RI_ARR)
 	{
 		move_pixels_horizontally(mlx, key);
@@ -116,7 +111,6 @@ void	move_fractal(t_mlx *mlx, int key)
 		move_pixels_down(mlx);
 		mlx->pos.y += (RES_Y / MOVE_PERCENTAGE) * mlx->scale;
 	}
-	printf("moving finished...\n");
 	calculate_remaining(mlx, key);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr, 0, 0);
 	return ;

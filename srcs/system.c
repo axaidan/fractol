@@ -1,18 +1,13 @@
 #include "fractol.h"
 
-static long double	mini_atold(char *s, int *error)
+static long double	mini_atold(char *s, int *error, int sign)
 {
-	int			sign;
-	long int	n_part; 
+	long int	n_part;
 	long int	f_part;
 	int			pow;
-	
-	sign = 1;
+
 	if (*s == '-')
-	{
-		sign = -1;
 		s++;
-	}
 	n_part = 0;
 	while (*s && ft_isdigit(*s))
 		n_part = n_part * 10 + *(s++) - '0';
@@ -25,21 +20,30 @@ static long double	mini_atold(char *s, int *error)
 		f_part = f_part * 10 + *(s++) - '0';
 		pow *= 10;
 	}
-	if (*s != '\0' && ft_isdigit(*s == FALSE))
+	if (*s != '\0' && ft_isdigit(*s) == FALSE)
 		*error = ER_BAD_JPRMS;
-	return(sign * ((long double)n_part + ((long double)f_part / pow)));
+	return (sign * ((long double)n_part + ((long double)f_part / pow)));
 }
 
-static int get_julia_params(t_args *args)
+static int	get_julia_params(t_args *args)
 {
 	int	error;
+	int	sign;
 
 	error = 0;
-	args->j_params.real = mini_atold(args->argv[2], &error);
+	if (ft_strlen(args->argv[2]) == 0 || ft_strlen(args->argv[3]) == 0)
+		return (close_mlx(NULL, ER_EMPTY_ARG));
+	sign = 1;
+	if (*(args->argv[2]) == '-')
+		sign = -1;
+	args->j_params.real = mini_atold(args->argv[2], &error, sign);
 	printf("j_p.real = %Lf\n", args->j_params.real);
 	if (error)
 		return (close_mlx(NULL, error));
-	args->j_params.imag = mini_atold(args->argv[3], &error);
+	sign = 1;
+	if (*(args->argv[3]) == '-')
+		sign = -1;
+	args->j_params.imag = mini_atold(args->argv[3], &error, sign);
 	printf("j_p.imag = %Lf\n", args->j_params.imag);
 	if (error)
 		return (close_mlx(NULL, error));
@@ -67,8 +71,8 @@ int	check_args(t_args *args)
 	}
 	else if (args->set == JULIA && args->argc == 2)
 	{
-		args->j_params.real = cRe;
-		args->j_params.imag = cIm;
+		args->j_params.real = C_RE;
+		args->j_params.imag = C_IM;
 	}
 	return (SUCCESS);
 }
@@ -99,10 +103,10 @@ int	start_mlx(t_mlx *mlx)
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, RES_X, RES_Y, "fractol");
 	if (mlx->win_ptr == NULL)
 		return (close_mlx(mlx, ER_WIN_CREA));
-	mlx->img.img_ptr = mlx_new_image(mlx->mlx_ptr, RES_X, RES_Y); 
+	mlx->img.img_ptr = mlx_new_image(mlx->mlx_ptr, RES_X, RES_Y);
 	if (mlx->img.img_ptr == NULL)
 		return (close_mlx(mlx, ER_IMG_CREA));
 	mlx->img.addr = mlx_get_data_addr(mlx->img.img_ptr, &mlx->img.bpp,
-		&mlx->img.l_len, &mlx->img.endian);
+			&mlx->img.l_len, &mlx->img.endian);
 	return (SUCCESS);
 }

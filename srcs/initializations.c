@@ -1,5 +1,23 @@
 #include "fractol.h"
 
+void	init_start_bounds_pts_le_ri(int key, t_pt *start, t_pt *bounds)
+{
+	if (key == LE_ARR)
+	{
+		start->x = 0;
+		start->y = 0;
+		bounds->x = RES_X / MOVE_PERCENTAGE;
+		bounds->y = RES_Y;
+	}
+	else
+	{
+		start->x = RES_X - RES_X / MOVE_PERCENTAGE;
+		start->y = 0;
+		bounds->x = RES_X;
+		bounds->y = RES_Y;
+	}
+}
+
 void	init_start_bounds_pts(int key, t_pt *start, t_pt *bounds)
 {
 	if (key == UP_ARR)
@@ -16,20 +34,8 @@ void	init_start_bounds_pts(int key, t_pt *start, t_pt *bounds)
 		bounds->x = RES_X;
 		bounds->y = RES_Y;
 	}
-	else if (key == LE_ARR)
-	{
-		start->x = 0;
-		start->y = 0;
-		bounds->x = RES_X / MOVE_PERCENTAGE;
-		bounds->y = RES_Y;
-	}
-	else // if (key == RI_ARR)
-	{
-		start->x = RES_X - RES_X / MOVE_PERCENTAGE;
-		start->y = 0;
-		bounds->x = RES_X;
-		bounds->y = RES_Y;
-	}
+	else
+		init_start_bounds_pts_le_ri(key, start, bounds);
 }
 
 void	init_args_struct(t_args *args, int argc, char **argv)
@@ -37,14 +43,13 @@ void	init_args_struct(t_args *args, int argc, char **argv)
 	args->argc = argc;
 	args->argv = argv;
 	args->set = MANDE;
-	args->j_params.real = cRe;
-	args->j_params.imag = cIm;
+	args->j_params.real = C_RE;
+	args->j_params.imag = C_IM;
 }
 
 void	init_variables(t_mlx *mlx)
 {
 	static int	first_time = TRUE;
-
 
 	mlx->scale = 1.0 / 128.0;
 	mlx->pos.x = 0.0;
@@ -70,11 +75,5 @@ void	init_mlx_struct(t_mlx *mlx)
 	mlx->img.bpp = -1;
 	mlx->img.l_len = -1;
 	mlx->img.endian = -1;
-	/*
-	   mlx->scale = 1.0 / 128.0;
-	   mlx->pos.x = 0.0;
-	   mlx->pos.y = 0.0;
-	   mlx->max_ite = 256;
-	   */
 	init_variables(mlx);
 }
