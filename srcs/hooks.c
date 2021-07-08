@@ -41,10 +41,8 @@ int	key_pressed(int key, t_mlx *mlx)
 		mlx->shift = TRUE;
 	else if (key == 's' && mlx->shift == TRUE)
 		mlx->shift = FALSE;
-	else if (key == 'i')
-		display_info(mlx);
-	else if (key == 'h')
-		display_controls();
+	else if (key == 'i' || key == 'h')
+		display_handler(mlx, key);
 	else if (key == 'p')
 		make_bmp(mlx);
 	return (SUCCESS);

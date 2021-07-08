@@ -54,6 +54,7 @@ void	change_render_method(t_mlx *mlx);
 void	display_controls(void);
 void	display_info(t_mlx *mlx);
 void	display_render_progress(t_pt pix);
+void	display_handler(t_mlx *mlx, int key);
 
 /*	render.c */
 int		continuous_pixel_scaling(int ite, t_cpx c2, int set);

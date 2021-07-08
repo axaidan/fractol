@@ -1,8 +1,7 @@
 #include "fractol.h"
 
-int	write_bmp_header(t_mlx *mlx, int fd)
+static int	write_bmp_header(int fd)
 {
-	(void)mlx;
 	unsigned char	bmp_header[14];
 	unsigned int	file_size;
 	int				error;
@@ -25,9 +24,8 @@ int	write_bmp_header(t_mlx *mlx, int fd)
 	return (0);
 }
 
-int	write_dib_header(t_mlx *mlx, int fd)
+static int	write_dib_header(int fd)
 {
-	(void)mlx;
 	unsigned char	dib_header[40];
 	int				error;
 
@@ -54,14 +52,14 @@ int	write_dib_header(t_mlx *mlx, int fd)
 	return (0);
 }
 
-int	write_pix_array(t_mlx *mlx, int fd)
+static int	write_pix_array(t_mlx *mlx, int fd)
 {
 	unsigned char	*uint_addr;
 	unsigned char	*last_line;
 	unsigned int	line_length;
 	int				error;
 
-	uint_addr = (unsigned char*)(mlx->img.addr);
+	uint_addr = (unsigned char *)(mlx->img.addr);
 	line_length = mlx->img.l_len;
 	last_line = uint_addr + (line_length * (RES_Y - 1));
 	while (last_line >= uint_addr)
@@ -115,10 +113,10 @@ int	make_bmp(t_mlx *mlx)
 	free(path);
 	if (fd < 0)
 		return (ER_BMP_OPEN);
-	error = write_bmp_header(mlx, fd);
+	error = write_bmp_header(fd);
 	if (error)
 		return (error);
-	error = write_dib_header(mlx, fd);
+	error = write_dib_header(fd);
 	if (error)
 		return (error);
 	error = write_pix_array(mlx, fd);

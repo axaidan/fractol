@@ -6,6 +6,7 @@ void	change_pixel(t_img *img, int x, int y, int shift)
 	t_rgb			rgb;
 	int				color;
 
+	shift = -1;
 	dst = img->addr + (y * img->l_len + x * (img->bpp / 8));
 	color = *(unsigned int *)dst;
 	if (color == BLACK)

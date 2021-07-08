@@ -20,18 +20,9 @@ static void	display_help(void)
 	ft_putendl_fd("Enjoy\n\t\t\taxaidan", STDERR_FILENO);
 }
 
-int	print_ret_err(int error)
-{
-	if (error == FALSE)
-		return (SUCCESS);
-	ft_putstr_fd("ERROR - fractol: ", STDERR_FILENO);
-	if (error == ER_MLX_INIT)
-		ft_putendl_fd("mlx_init()", STDERR_FILENO);
-	else if (error == ER_WIN_CREA)
-		ft_putendl_fd("mlx_new_window()", STDERR_FILENO);
-	else if (error == ER_IMG_CREA)
-		ft_putendl_fd("mlx_new_image()", STDERR_FILENO);
-	else if (error == ER_BAD_SET)
+int	print_ret_usage_err(int error)
+{	
+	if (error == ER_BAD_SET)
 		ft_putendl_fd("arg one \'set\' neither \"mandelbrot\" nor \"julia\"",
 			STDERR_FILENO);
 	else if (error == ER_BAD_ARGC)
@@ -43,7 +34,33 @@ int	print_ret_err(int error)
 		ft_putendl_fd("julia parameter must not be zero", STDERR_FILENO);
 	else if (error == ER_EMPTY_ARG)
 		ft_putendl_fd("empty argument", STDERR_FILENO);
+	return (error);
+}	
+
+int	print_ret_err(int error)
+{
+	if (error == FALSE)
+		return (SUCCESS);
+	ft_putstr_fd("ERROR - fractol: ", STDERR_FILENO);
+	if (error == ER_MLX_INIT)
+		ft_putendl_fd("mlx_init() failed", STDERR_FILENO);
+	else if (error == ER_WIN_CREA)
+		ft_putendl_fd("mlx_new_window() failed", STDERR_FILENO);
+	else if (error == ER_IMG_CREA)
+		ft_putendl_fd("mlx_new_image() failed", STDERR_FILENO);
+	else if (error == ER_PATH_CONCAT)
+		ft_putendl_fd("screenshot file name creation failed", STDERR_FILENO);
+	else if (error == ER_BMP_OPEN)
+		ft_putendl_fd("open(2) .bmp screenshot file failed", STDERR_FILENO);
+	else if (error == ER_BMP_HDR || error == ER_DIB_HDR)
+		ft_putendl_fd("write(2) .bmp screenshot file header failed",
+			STDERR_FILENO);
+	else if (error == ER_PIX_ARR)
+		ft_putendl_fd("write(2) .bmp screenshot file failedd", STDERR_FILENO);
 	if (error > ER_BAD_ARGC)
+	{
+		print_ret_usage_err(error);
 		display_help();
+	}
 	return (error);
 }

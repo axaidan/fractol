@@ -1,24 +1,26 @@
 #include "fractol.h"
 
-void    display_controls(void)
+void	display_controls(void)
 {
 	ft_putchar_fd('\n', STDERR_FILENO);
 	ft_putendl_fd("h key\t\t: display help", STDERR_FILENO);
-    ft_putendl_fd("mouse scroll\t: zoom towards mouse pointer", STDERR_FILENO);
-    ft_putendl_fd("arrows\t\t: scroll frame", STDERR_FILENO);
-    ft_putendl_fd("m key\t\t: change render mode\ns key\t\t: shift colors",
-        STDERR_FILENO);
-    ft_putendl_fd("i key\t\t: display maximum iterations", STDERR_FILENO);
-    ft_putendl_fd("+ key\t\t: increase maximum iterations, up to 1056",
-        STDERR_FILENO);
-    ft_putendl_fd("- key\t\t: decrease maximum iterations, down to 8",
-        STDERR_FILENO);
+	ft_putendl_fd("mouse scroll\t: zoom towards mouse pointer", STDERR_FILENO);
+	ft_putendl_fd("arrows\t\t: scroll frame", STDERR_FILENO);
+	ft_putendl_fd("m key\t\t: change render mode\ns key\t\t: shift colors",
+		STDERR_FILENO);
+	ft_putendl_fd("i key\t\t: display maximum iterations", STDERR_FILENO);
+	ft_putendl_fd("+ key\t\t: increase maximum iterations, up to 1056",
+		STDERR_FILENO);
+	ft_putendl_fd("- key\t\t: decrease maximum iterations, down to 8",
+		STDERR_FILENO);
+	ft_putendl_fd("p key\t\t: take screenshot",
+		STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
 void	display_info(t_mlx *mlx)
 {
-	printf("maximum iterations\t= %d\n", mlx->max_ite);
+	printf("\nmaximum iterations\t= %d\n", mlx->max_ite);
 }
 
 void	display_render_progress(t_pt pix)
@@ -39,5 +41,13 @@ void	display_render_progress(t_pt pix)
 	else if (pix.y == RES_Y - 1 && pix.x == RES_X - 1)
 		ft_putstr_fd("\a DONE !", STDOUT_FILENO);
 	else if (pix.y % (RES_Y / 10) == 0 && pix.x == 0)
-	   	ft_putstr_fd(" .", STDOUT_FILENO);
+		ft_putstr_fd(" .", STDOUT_FILENO);
+}
+
+void	display_handler(t_mlx *mlx, int key)
+{
+	if (key == 'i')
+		display_info(mlx);
+	else if (key == 'h')
+		display_controls();
 }
