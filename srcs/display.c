@@ -3,6 +3,7 @@
 void	display_controls(void)
 {
 	ft_putchar_fd('\n', STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
 	ft_putendl_fd("h key\t\t: display help", STDERR_FILENO);
 	ft_putendl_fd("mouse scroll\t: zoom towards mouse pointer", STDERR_FILENO);
 	ft_putendl_fd("arrows\t\t: scroll frame", STDERR_FILENO);
