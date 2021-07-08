@@ -45,17 +45,18 @@ typedef struct s_args
 
 typedef struct s_mlx
 {
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_img		img;
-	long double	scale;
-	t_pos		pos;
-	int			max_ite;
-	int			shift;
-	int			set;
-	t_cpx		j_params;
-	int			(*render)(int, t_cpx, int);
-	t_pt		center;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	t_img			img;
+	long double		scale;
+	t_pos			pos;
+	int				max_ite;
+	int				shift;
+	int				set;
+	t_cpx			j_params;
+	int				(*render)(int, t_cpx, int);
+	t_pt			center;
+	unsigned char	shift_val;
 }	t_mlx;
 
 #endif

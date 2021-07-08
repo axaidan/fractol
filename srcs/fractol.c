@@ -44,7 +44,7 @@ int	julia(t_cpx c0, int max, t_cpx params, int (*render)(int, t_cpx, int))
 	if (i == max)
 		return (BLACK);
 	else
-		return (render(i, c0, JULIA));
+		return (render(max, c0, JULIA));
 }	
 
 void	draw_fractal(t_mlx *mlx)
@@ -65,6 +65,7 @@ void	draw_fractal(t_mlx *mlx)
 				color = mandelbrot(scaled, mlx->max_ite, mlx->render);
 			else
 				color = julia(scaled, mlx->max_ite, mlx->j_params, mlx->render);
+			color = change_color_by(color, mlx->shift_val);
 			my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
 			display_render_progress(pix);
 			pix.x++;

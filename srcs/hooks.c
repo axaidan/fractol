@@ -75,22 +75,16 @@ int	mouse_used(int button, int x, int y, t_mlx *mlx)
 int	shift_colors(t_mlx *mlx)
 {
 	t_pt					pix;
-	static int				inc_dec;
-	static unsigned char	shift = 0;
 
 	if (mlx->shift == TRUE)
 	{
-		if (shift == 0)
-			inc_dec = 1;
-		if (shift == 255)
-			inc_dec = -1;
-		shift += inc_dec;
+		mlx->shift_val++;
 		pix.y = 0;
 		while (pix.y < RES_Y)
 		{
 			pix.x = 0;
 			while (pix.x < RES_X)
-				change_pixel(&mlx->img, pix.x++, pix.y, inc_dec);
+				change_pixel(&mlx->img, pix.x++, pix.y);
 			pix.y++;
 		}
 		mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,

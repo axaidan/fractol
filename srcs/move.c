@@ -84,6 +84,7 @@ void	calculate_remaining(t_mlx *mlx, int key)
 				color = mandelbrot(scaled, mlx->max_ite, mlx->render);
 			else
 				color = julia(scaled, mlx->max_ite, mlx->j_params, mlx->render);
+			color = change_color_by(color, mlx->shift_val);
 			my_mlx_pixel_put(&mlx->img, pix.x, pix.y, color);
 			pix.x++;
 		}

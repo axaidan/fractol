@@ -56,6 +56,7 @@ void	init_variables(t_mlx *mlx)
 	mlx->pos.y = 0.0;
 	mlx->max_ite = 256;
 	mlx->shift = FALSE;
+	mlx->shift_val = 0;
 	if (first_time == TRUE)
 	{
 		mlx->set = MANDE;
