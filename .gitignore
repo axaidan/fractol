@@ -3,3 +3,4 @@ rosetta/
 *.o
 a.out
 fractol
+screenshot*

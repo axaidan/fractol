@@ -6,6 +6,7 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <math.h>
+# include <fcntl.h>
 # include <string.h>
 # include <errno.h>
 
@@ -63,5 +64,8 @@ int		black_and_white(int ite, t_cpx c, int set);
 
 /*	move.c */
 void	move_fractal(t_mlx *mlx, int key);
+
+/*	bmp.c */
+int		make_bmp(t_mlx *mlx);
 
 #endif

@@ -45,6 +45,8 @@ int	key_pressed(int key, t_mlx *mlx)
 		display_info(mlx);
 	else if (key == 'h')
 		display_controls();
+	else if (key == 'p')
+		make_bmp(mlx);
 	return (SUCCESS);
 }
 

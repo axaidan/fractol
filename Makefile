@@ -11,7 +11,8 @@ SRCS		=	main.c \
 				hooks.c \
 				display.c \
 				render.c \
-				move.c
+				move.c \
+				bmp.c
 
 SRCS_DIR	=	srcs
 
