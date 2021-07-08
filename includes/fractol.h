@@ -1,8 +1,6 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-
-
 /*	STANDARD LIBS */
 # include <stdio.h>
 # include <stdlib.h>
