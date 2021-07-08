@@ -6,7 +6,7 @@
 /*   By: axaidan <axaidan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 19:27:23 by axaidan           #+#    #+#             */
-/*   Updated: 2020/11/10 19:27:24 by axaidan          ###   ########.fr       */
+/*   Updated: 2021/07/08 15:50:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	find_end(char const *s, char const *set, int i)
 	return (end);
 }
 
-char		*ft_strtrim(char const *s, char const *set)
+char	*ft_strtrim(char const *s, char const *set)
 {
 	int		start;
 	int		end;
@@ -53,8 +53,12 @@ char		*ft_strtrim(char const *s, char const *set)
 	start = 0;
 	while (s[start] && is_set(s[start], set))
 		start++;
-	end = (s[start] == '\0') ? start : find_end(s, set, start);
-	if (!(trimmed = malloc(sizeof(char) * (end - start + 1))))
+	if (s[start] == '\0')
+		end = start;
+	else
+		end = find_end(s, set, start);
+	trimmed = malloc(sizeof(char) * (end - start + 1));
+	if (trimmed == NULL)
 		return (NULL);
 	i = 0;
 	while (start + i < end)

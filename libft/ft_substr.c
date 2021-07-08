@@ -6,7 +6,7 @@
 /*   By: axaidan <axaidan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:46:57 by axaidan           #+#    #+#             */
-/*   Updated: 2020/11/10 19:19:40 by axaidan          ###   ########.fr       */
+/*   Updated: 2021/07/08 15:55:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = s_len - start;
 	if (start >= s_len)
 		return (ft_calloc(sizeof(char), 1));
-	if (!(sub = malloc(sizeof(char) * (len + 1))))
+	sub = malloc(sizeof(char) * (len + 1));
+	if (sub == NULL)
 		return (NULL);
 	i = start;
 	while (s[i] && i - start < len)

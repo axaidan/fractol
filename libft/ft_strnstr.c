@@ -6,7 +6,7 @@
 /*   By: axaidan <axaidan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:44:32 by axaidan           #+#    #+#             */
-/*   Updated: 2020/11/10 17:44:34 by axaidan          ###   ########.fr       */
+/*   Updated: 2021/07/08 15:54:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
 		{
 			j++;
 			if (needle[j] == '\0')
-				return ((char*)(haystack + i));
+				return ((char *)(haystack + i));
 		}
 		i++;
 	}

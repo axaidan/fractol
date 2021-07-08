@@ -1,22 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axaidan <axaidan@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/10 19:28:50 by axaidan           #+#    #+#             */
-/*   Updated: 2020/12/16 15:42:26 by axaidan          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef LIBFT_H
 # define LIBFT_H
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
-# define BUFFER_SIZE 1024
 
 void			*ft_memset(void *s, int c, size_t n);
 void			ft_bzero(void *s, size_t n);
@@ -53,7 +40,7 @@ void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 
-typedef struct	s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
@@ -68,51 +55,5 @@ void			ft_lstdelone(t_list *elem, void (*del)(void*));
 void			ft_lstclear(t_list **lst, void(*del)(void *));
 void			ft_lstiter(t_list *lst, void(*f)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void*));
-
-typedef struct	s_conv
-{
-	int				i;
-	unsigned int	u;
-	unsigned char	c;
-	char			*str;
-	void			*ptr;
-	double			d;
-	int				width;
-	int				preci;
-	int				f_zero;
-	int				f_zero_f;
-	int				f_minus;
-	char			*sub;
-}				t_conv;
-
-char			*zero_pad_int(t_conv conv);
-int				print_int(t_conv conv, va_list args);
-char			*utoa(unsigned int n);
-int				print_unsigned_int(t_conv conv, va_list args);
-
-int				print_char(t_conv conv, va_list args, char c);
-
-int				print_str(t_conv conv, va_list args);
-
-char			*utox(unsigned int n, char c);
-int				print_hexa(t_conv conv, va_list args, char c);
-
-char			*ltox(unsigned long n, char c);
-int				print_addr(t_conv conv, va_list args);
-
-t_conv			init_struct(void);
-int				putchar_ret(char c);
-int				putstr_ret(char *s);
-void			ft_putchar_fd(char c, int fd);
-int				ft_printf(const char *fmt, ...);
-
-int				get_relevant(long double d, int afterpoint);
-double			roundup_p_zero(double d);
-char			*roundup_str(char **str, int i);
-int				zero_is_signed(long double lf);
-char			*ftoa(double d, int afterpoint);
-int				print_double(t_conv conv, va_list args);
-
-int				get_next_line(int fd, char **line);
 
 #endif

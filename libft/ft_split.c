@@ -1,31 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axaidan <axaidan@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/10 16:15:42 by axaidan           #+#    #+#             */
-/*   Updated: 2020/11/18 15:04:30 by axaidan          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
-static void		free_split(char **tab)
+void	*free_split(char **str)
 {
 	int	i;
 
 	i = 0;
-	while (tab[i] != NULL)
+	while (str[i] != NULL)
 	{
-		free(tab[i]);
+		free(str[i]);
 		i++;
 	}
-	free(tab);
+	free(str);
+	return (NULL);
 }
 
-static int		count_words(char const *s, char c)
+static int	count_words(char const *s, char c)
 {
 	int	i;
 	int	state;
@@ -49,7 +38,7 @@ static int		count_words(char const *s, char c)
 	return (words);
 }
 
-static char		**alloc_words(char const *s, char c, char **tab)
+static char	**alloc_words(char const *s, char c, char **tab)
 {
 	int	len;
 	int	i;
@@ -66,18 +55,17 @@ static char		**alloc_words(char const *s, char c, char **tab)
 			len++;
 		}
 		if (len)
-			if (!(tab[j++] = malloc(sizeof(char) * (len + 1))))
-			{
-				free_split(tab);
-				return (NULL);
-			}
+		{
+			tab[j] = malloc(sizeof(char) * (len + 1));
+			j++;
+		}
 		while (s[i] && s[i] == c)
 			i++;
 	}
 	return (tab);
 }
 
-static char		**copy_words(char const *s, char c, char **tab)
+static char	**copy_words(char const *s, char c, char **tab)
 {
 	int	i;
 	int	j;
@@ -101,7 +89,7 @@ static char		**copy_words(char const *s, char c, char **tab)
 	return (tab);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	int		words;
 	char	**tab;
@@ -109,9 +97,9 @@ char			**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	words = count_words(s, c);
-	if (!(tab = malloc(sizeof(char *) * (words + 1))))
-		return (NULL);
-	if (!(tab = alloc_words(s, c, tab)))
+	tab = malloc(sizeof(char *) * (words + 1));
+	tab = alloc_words(s, c, tab);
+	if (tab == NULL)
 		return (NULL);
 	tab = copy_words(s, c, tab);
 	tab[words] = NULL;

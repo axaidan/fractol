@@ -32,7 +32,7 @@ LIB_LINK	=	-L ${LIBFT_DIR} -L ${MLX_DIR}
 
 ALL_LIBS	=	-lm -lft -lmlx -lXext -lX11
 
-.c.o	:	${INCLUDE_DIR}/cub3d.h ${INCLUDE_DIR}/cub3d_errors.h
+%.o		:	%.c ${INCLUDE_DIR}/fractol.h ${INCLUDE_DIR}/errors.h ${INCLUDE_DIR}/defines.h ${INCLUDE_DIR}/structures.h
 	${CC} ${CFLAGS} ${HEADERS} -c $< -o ${<:.c=.o}
 
 all		:	${NAME}

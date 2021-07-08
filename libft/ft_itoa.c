@@ -6,19 +6,22 @@
 /*   By: axaidan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 12:20:18 by axaidan           #+#    #+#             */
-/*   Updated: 2020/11/10 15:47:44 by axaidan          ###   ########.fr       */
+/*   Updated: 2021/07/08 16:01:31 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		count_chars(long n)
+static int	count_chars(long n)
 {
 	int	chars;
 
 	if (n == 0)
 		return (1);
-	chars = (n < 0) ? 1 : 0;
+	if (n < 0)
+		chars = 1;
+	else
+		chars = 0;
 	while (n)
 	{
 		n /= 10;
@@ -27,7 +30,7 @@ static int		count_chars(long n)
 	return (chars);
 }
 
-static void		make_str(char *str, long n, int *i)
+static void	make_str(char *str, long n, int *i)
 {
 	if (n < 0)
 	{
@@ -43,7 +46,7 @@ static void		make_str(char *str, long n, int *i)
 		str[(*i)++] = n + '0';
 }
 
-char			*ft_itoa(int x)
+char	*ft_itoa(int x)
 {
 	long	n;
 	char	*str;
@@ -52,7 +55,8 @@ char			*ft_itoa(int x)
 
 	n = x;
 	chars = count_chars(n);
-	if (!(str = malloc(sizeof(char) * (chars + 1))))
+	str = malloc(sizeof(char) * (chars + 1));
+	if (str == NULL)
 		return (NULL);
 	i = 0;
 	make_str(str, n, &i);

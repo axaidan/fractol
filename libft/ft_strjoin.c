@@ -6,7 +6,7 @@
 /*   By: axaidan <axaidan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 16:43:48 by axaidan           #+#    #+#             */
-/*   Updated: 2020/11/10 16:43:49 by axaidan          ###   ########.fr       */
+/*   Updated: 2021/07/08 15:57:19 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,16 @@ static int	len(const char *s)
 	return (i);
 }
 
-char		*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		i;
 	int		j;
 	char	*cat;
 
-	if (!s1 || !s2 || !(cat = malloc(sizeof(char) * (len(s1) + len(s2) + 1))))
+	if (!s1 || !s2)
+		return (NULL);
+	cat = malloc(sizeof(char) * (len(s1) + len(s2) + 1));
+	if (cat == NULL)
 		return (NULL);
 	i = 0;
 	while (s1[i])

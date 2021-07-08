@@ -6,7 +6,7 @@
 /*   By: axaidan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 18:17:05 by axaidan           #+#    #+#             */
-/*   Updated: 2020/11/10 16:48:34 by axaidan          ###   ########.fr       */
+/*   Updated: 2021/07/08 16:03:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 	size_t	len_s;
 	size_t	i;
 
-	len_d = ft_strlen((const char*)dest);
+	len_d = ft_strlen((const char *)dest);
 	len_s = ft_strlen(src);
 	if (size > 0)
 	{

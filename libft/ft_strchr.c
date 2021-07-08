@@ -6,7 +6,7 @@
 /*   By: axaidan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 17:40:51 by axaidan           #+#    #+#             */
-/*   Updated: 2020/09/25 17:41:39 by axaidan          ###   ########.fr       */
+/*   Updated: 2021/07/08 15:58:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ char	*ft_strchr(const char *s, int c)
 		i++;
 	if (s[i] == '\0' && (char)c != '\0')
 		return (NULL);
-	return ((char*)(s + i));
+	return ((char *)(s + i));
 }
