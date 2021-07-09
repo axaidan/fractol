@@ -42,7 +42,7 @@ void	draw_fractal(t_mlx *mlx);
 
 /*	utils_mlx.c */
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-void	change_pixel(t_img *img, int x, int y);
+void	change_pixel(t_img *img, int x, int y, int (*render)(int, t_cpx, int));
 int		change_color_by(int color, int val);
 
 /*	hooks.c */

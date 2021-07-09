@@ -1,6 +1,6 @@
 #include "fractol.h"
 
-void	change_pixel(t_img *img, int x, int y)
+void	change_pixel(t_img *img, int x, int y, int (*render)(int, t_cpx, int))
 {
 	char			*dst;
 	t_rgb			rgb;
@@ -8,7 +8,7 @@ void	change_pixel(t_img *img, int x, int y)
 
 	dst = img->addr + (y * img->l_len + x * (img->bpp / 8));
 	color = *(unsigned int *)dst;
-	if (color == BLACK)
+	if (color == BLACK && render != black_and_white)
 		return ;
 	rgb.r = (color >> 16) - 1;
 	rgb.g = (color >> 8) - 1;

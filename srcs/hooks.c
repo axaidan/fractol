@@ -5,6 +5,8 @@ void	change_render_method(t_mlx *mlx)
 	static int	i = 4;
 
 	i++;
+	mlx->shift = FALSE;
+	mlx->shift_val = 0;
 	if (i == 5)
 		i = 0;
 	if (i == 0)
@@ -84,7 +86,7 @@ int	shift_colors(t_mlx *mlx)
 		{
 			pix.x = 0;
 			while (pix.x < RES_X)
-				change_pixel(&mlx->img, pix.x++, pix.y);
+				change_pixel(&mlx->img, pix.x++, pix.y, mlx->render);
 			pix.y++;
 		}
 		mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr,
