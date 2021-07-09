@@ -2,7 +2,7 @@
 
 void	change_render_method(t_mlx *mlx)
 {
-	static int	i = 2;
+	static int	i = 4;
 
 	i++;
 	if (i == 5)
